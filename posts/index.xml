@@ -130,31 +130,5 @@ go test 测试 运行当前包目录下的tests，其中 go test -v 会打印详
 ]]></content>
 		</item>
 		
-		<item>
-			<title>Go 工具链</title>
-			<link>https://carrymaniac.github.io/posts/hello-world/</link>
-			<pubDate>Mon, 06 Apr 2020 13:27:20 +0800</pubDate>
-			
-			<guid>https://carrymaniac.github.io/posts/hello-world/</guid>
-			<description>go 工具链
-go build 编译go文件 跨平台编译 env GOOS=linux GOARCH=amd64 go build
-go install 也是编译 但是与build最大的不同在于会将文件输出打包在pkg目录下
-go get 获取包 例如：go get -u xxx
-go fmt 统一代码风格和排版
-go test 测试 运行当前包目录下的tests go test -v 会打印详细信息</description>
-			<content type="html"><![CDATA[<p>go 工具链</p>
-<p>go build 编译go文件
-跨平台编译 env GOOS=linux GOARCH=amd64 go build</p>
-<p>go install 也是编译
-但是与build最大的不同在于会将文件输出打包在pkg目录下</p>
-<p>go get 获取包
-例如：go get -u xxx</p>
-<p>go fmt 统一代码风格和排版</p>
-<p>go test 测试
-运行当前包目录下的tests
-go test -v 会打印详细信息</p>
-]]></content>
-		</item>
-		
 	</channel>
 </rss>
