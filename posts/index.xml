@@ -15,8 +15,24 @@
 			<pubDate>Mon, 06 Apr 2020 15:04:51 +0800</pubDate>
 			
 			<guid>https://carrymaniac.github.io/posts/go/</guid>
-			<description>所用到框架：    类型 名称     web框架 gin   日志库 lexkong/log   配置 spf13/viper   JWT dgrijalva/jwt-go   数据库ORM gorm    关于fmt包    值 含义     %v 值的默认格式表示   %+v 类似%v，但输出结构体时会添加字段名   %#v 值的Go语法表示   %T 打印值的类型   %% 百分号   %b 表示为二进制   %c 该值对应的unicode码值   %d 表示为十进制   %e %E 科学计数法，如-1234.</description>
-			<content type="html"><![CDATA[<h2 id="所用到框架">所用到框架：</h2>
+			<description>关于Go的工具链 go build 编译go文件 跨平台编译 env GOOS=linux GOARCH=amd64 go build
+go install 也是编译 但是与build最大的不同在于会将文件输出打包在pkg目录下
+go get 获取包 例如：go get -u xxx
+go fmt 统一代码风格和排版
+go test 测试 运行当前包目录下的tests，其中 go test -v 会打印详细信息
+所用到框架：    类型 名称     web框架 gin   日志库 lexkong/log   配置 spf13/viper   JWT dgrijalva/jwt-go   数据库ORM gorm    关于fmt包    值 含义     %v 值的默认格式表示   %+v 类似%v，但输出结构体时会添加字段名   %#v 值的Go语法表示   %T 打印值的类型   %% 百分号   %b 表示为二进制   %c 该值对应的unicode码值   %d 表示为十进制   %e %E 科学计数法，如-1234.</description>
+			<content type="html"><![CDATA[<h2 id="关于go的工具链">关于Go的工具链</h2>
+<p>go build 编译go文件
+跨平台编译 env GOOS=linux GOARCH=amd64 go build</p>
+<p>go install 也是编译
+但是与build最大的不同在于会将文件输出打包在pkg目录下</p>
+<p>go get 获取包
+例如：go get -u xxx</p>
+<p>go fmt 统一代码风格和排版</p>
+<p>go test 测试
+运行当前包目录下的tests，其中 go test -v 会打印详细信息</p>
+<p><img src="https://raw.githubusercontent.com/carrymaniac/pic/master/Golang" alt="GoTest"></p>
+<h2 id="所用到框架">所用到框架：</h2>
 <table>
 <thead>
 <tr>
