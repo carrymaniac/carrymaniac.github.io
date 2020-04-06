@@ -6,8 +6,57 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-hans</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Mon, 06 Apr 2020 15:04:51 +0800</lastBuildDate>
+		<lastBuildDate>Mon, 06 Apr 2020 15:52:49 +0800</lastBuildDate>
 		<atom:link href="https://carrymaniac.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>如何使用Hugo&#43;GithubPage搭建一个简单的博客</title>
+			<link>https://carrymaniac.github.io/posts/how/</link>
+			<pubDate>Mon, 06 Apr 2020 15:52:49 +0800</pubDate>
+			
+			<guid>https://carrymaniac.github.io/posts/how/</guid>
+			<description>起因是因为在搜go相关知识的时候，搜到了一个博客，样式很好看，心想着也要搭建一个人博客，原先是想着自己开发手写一个博客出来，但是思考了一下这样的造轮子没什么意义。因此开始折腾如何使用hugo来搭建一个个人博客。
+第一步 下载安装hugo  这一部分建议参考 www.gohugo.org 这应该是一个Hugo粉丝自己的社区网站，在这里可以了解如何安装hugo mac用户用brew安装就行，会自动配置好env环境变量  第二步 配置Github Page  GithubPage的官方介绍：https://pages.github.com/ 简要的来说 就是创建好一个repository，主要是这个repository的名字需要写好，名字应该为username.github.io，项目的链接为https://github.com/username/username.github.io  第三步 Hugo站点 hugo new site changmen-blog # 新建一个叫changmen-blog的站点 hugo new post/my-first-post.md # 新建一篇叫my-first-post的文章，用markdown格式 //对文章进行编辑 hugo server -D # 启动本地服务器进行预览 # 此时可以使用127.0.0.1:1313进行预览博客样式 如果想对样式进行调整，可在hugo的样式库里面找到自己喜欢的主题，并按照其中的配置修改主目录下的config.toml，我现在用的是一个国人设计的hermit.
+第四部 部署到git 首先使用hugo进行构建，默认将静态站点保存到 &amp;ldquo;public&amp;rdquo; 目录。
+之后进入到public文件夹，git init进行初始化
+git init ## 这里carrymaniac/carrymaniac.github.io记得换成你自己的 git remote add origin git@github.com:carrymaniac/carrymaniac.github.io ## 因为origin的master在创建的时候新建了个Readme，所以需要合并一下 git pull origin master --allow-unrelated-histories git status git add . git commit -m &amp;#34;add new post&amp;#34; git push -u origin master 此时便完成了一个人博客的部署</description>
+			<content type="html"><![CDATA[<p>起因是因为在搜go相关知识的时候，搜到了一个博客，样式很好看，心想着也要搭建一个人博客，原先是想着自己开发手写一个博客出来，但是思考了一下这样的造轮子没什么意义。因此开始折腾如何使用hugo来搭建一个个人博客。</p>
+<h2 id="第一步-下载安装hugo">第一步 下载安装hugo</h2>
+<ul>
+<li>这一部分建议参考 <a href="http://www.gohugo.org">www.gohugo.org</a> 这应该是一个Hugo粉丝自己的社区网站，在这里可以了解如何安装hugo</li>
+<li>mac用户用brew安装就行，会自动配置好env环境变量</li>
+</ul>
+<h2 id="第二步-配置github-page">第二步 配置Github Page</h2>
+<ul>
+<li>GithubPage的官方介绍：https://pages.github.com/</li>
+<li>简要的来说 就是创建好一个repository，主要是这个repository的名字需要写好，名字应该为<code>username.github.io</code>，项目的链接为<code>https://github.com/username/username.github.io</code></li>
+</ul>
+<h2 id="第三步-hugo站点">第三步 Hugo站点</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">hugo new site changmen-blog <span class="c1"># 新建一个叫changmen-blog的站点</span>
+hugo new post/my-first-post.md <span class="c1"># 新建一篇叫my-first-post的文章，用markdown格式</span>
+//对文章进行编辑
+
+hugo server -D <span class="c1"># 启动本地服务器进行预览</span>
+<span class="c1"># 此时可以使用127.0.0.1:1313进行预览博客样式</span>
+</code></pre></div><p>如果想对样式进行调整，可在hugo的样式库里面找到自己喜欢的主题，并按照其中的配置修改主目录下的<code>config.toml</code>，我现在用的是一个国人设计的<code>hermit</code>.</p>
+<h2 id="第四部-部署到git">第四部 部署到git</h2>
+<p>首先使用<code>hugo</code>进行构建，默认将静态站点保存到 &ldquo;public&rdquo; 目录。</p>
+<p>之后进入到public文件夹，git init进行初始化</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">git init 
+<span class="c1">## 这里carrymaniac/carrymaniac.github.io记得换成你自己的</span>
+git remote add origin git@github.com:carrymaniac/carrymaniac.github.io
+<span class="c1">## 因为origin的master在创建的时候新建了个Readme，所以需要合并一下</span>
+git pull origin master --allow-unrelated-histories
+git status 
+git add .
+git commit -m <span class="s2">&#34;add new post&#34;</span>
+git push -u origin master
+</code></pre></div><p>此时便完成了一个人博客的部署</p>
+<p>博客的地址为 <a href="https://username.github.io">https://username.github.io</a></p>
+<h2 id="结语">结语</h2>
+<p>博客搭建大概就是这样，之后我会补充一个如何用Github作为图床，方便博客图片插入的小番外</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Golang从入门到放弃</title>

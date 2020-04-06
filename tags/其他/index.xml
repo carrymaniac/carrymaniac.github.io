@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>UnhappyBrain</title>
-    <link>https://carrymaniac.github.io/</link>
-    <description>Recent content on UnhappyBrain</description>
+    <title>其他 on UnhappyBrain</title>
+    <link>https://carrymaniac.github.io/tags/%E5%85%B6%E4%BB%96/</link>
+    <description>Recent content in 其他 on UnhappyBrain</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hans</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 06 Apr 2020 14:14:14 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Apr 2020 15:52:49 +0800</lastBuildDate>
     
-	<atom:link href="https://carrymaniac.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://carrymaniac.github.io/tags/%E5%85%B6%E4%BB%96/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -23,31 +23,6 @@
 第四部 部署到git 首先使用hugo进行构建，默认将静态站点保存到 &amp;ldquo;public&amp;rdquo; 目录。
 之后进入到public文件夹，git init进行初始化
 git init ## 这里carrymaniac/carrymaniac.github.io记得换成你自己的 git remote add origin git@github.com:carrymaniac/carrymaniac.github.io ## 因为origin的master在创建的时候新建了个Readme，所以需要合并一下 git pull origin master --allow-unrelated-histories git status git add . git commit -m &amp;#34;add new post&amp;#34; git push -u origin master 此时便完成了一个人博客的部署</description>
-    </item>
-    
-    <item>
-      <title>Golang从入门到放弃</title>
-      <link>https://carrymaniac.github.io/posts/go/</link>
-      <pubDate>Mon, 06 Apr 2020 15:04:51 +0800</pubDate>
-      
-      <guid>https://carrymaniac.github.io/posts/go/</guid>
-      <description>关于Go的工具链 go build 编译go文件 跨平台编译 env GOOS=linux GOARCH=amd64 go build
-go install 也是编译 但是与build最大的不同在于会将文件输出打包在pkg目录下
-go get 获取包 例如：go get -u xxx
-go fmt 统一代码风格和排版
-go test 测试 运行当前包目录下的tests，其中 go test -v 会打印详细信息
-所用到框架：    类型 名称     web框架 gin   日志库 lexkong/log   配置 spf13/viper   JWT dgrijalva/jwt-go   数据库ORM gorm    关于fmt包    值 含义     %v 值的默认格式表示   %+v 类似%v，但输出结构体时会添加字段名   %#v 值的Go语法表示   %T 打印值的类型   %% 百分号   %b 表示为二进制   %c 该值对应的unicode码值   %d 表示为十进制   %e %E 科学计数法，如-1234.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://carrymaniac.github.io/about/</link>
-      <pubDate>Mon, 06 Apr 2020 14:14:14 +0800</pubDate>
-      
-      <guid>https://carrymaniac.github.io/about/</guid>
-      <description>你好，我是长门，这是我的个人博客，如果有建议或问题欢迎与我联系
-联系方式：
- Email: 838537276@qq.com Github: https://github.com/carrymaniac  </description>
     </item>
     
   </channel>
