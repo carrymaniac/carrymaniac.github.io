@@ -6,8 +6,108 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-hans</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Mon, 06 Apr 2020 13:27:20 +0800</lastBuildDate>
+		<lastBuildDate>Mon, 06 Apr 2020 15:04:51 +0800</lastBuildDate>
 		<atom:link href="https://carrymaniac.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Go</title>
+			<link>https://carrymaniac.github.io/posts/go/</link>
+			<pubDate>Mon, 06 Apr 2020 15:04:51 +0800</pubDate>
+			
+			<guid>https://carrymaniac.github.io/posts/go/</guid>
+			<description>GO语言笔记总结 所用到框架：    类型 名称     web框架 gin   日志库 lexkong/log   配置 spf13/viper   JWT dgrijalva/jwt-go   数据库ORM gorm    关于fmt包    %v 值的默认格式表示     %+v 类似%v，但输出结构体时会添加字段名   %#v 值的Go语法表示   %T 打印值的类型   %% 百分号   %b 表示为二进制   %c 该值对应的unicode码值   %d 表示为十进制   %e %E 科学计数法，如-1234.</description>
+			<content type="html"><![CDATA[<h1 id="go语言笔记总结">GO语言笔记总结</h1>
+<h2 id="所用到框架">所用到框架：</h2>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>web框架</td>
+<td>gin</td>
+</tr>
+<tr>
+<td>日志库</td>
+<td>lexkong/log</td>
+</tr>
+<tr>
+<td>配置</td>
+<td>spf13/viper</td>
+</tr>
+<tr>
+<td>JWT</td>
+<td>dgrijalva/jwt-go</td>
+</tr>
+<tr>
+<td>数据库ORM</td>
+<td>gorm</td>
+</tr>
+</tbody>
+</table>
+<h2 id="关于fmt包">关于fmt包</h2>
+<table>
+<thead>
+<tr>
+<th>%v</th>
+<th>值的默认格式表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%+v</td>
+<td>类似%v，但输出结构体时会添加字段名</td>
+</tr>
+<tr>
+<td>%#v</td>
+<td>值的Go语法表示</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>打印值的类型</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>百分号</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>表示为二进制</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>该值对应的unicode码值</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>表示为十进制</td>
+</tr>
+<tr>
+<td>%e %E</td>
+<td>科学计数法，如-1234.456e+78</td>
+</tr>
+<tr>
+<td>%f %F</td>
+<td>有小数部分但无指数部分，如123.456</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>直接输出字符串或者[]byte</td>
+</tr>
+<tr>
+<td>%q</td>
+<td>该值对应的双引号括起来的go语法字符串字面值，必要时会采用安全的转义表示</td>
+</tr>
+</tbody>
+</table>
+<p>Tip：</p>
+<p>记住切片是从a到b-1切的：因此如果需要切到index为n的时候，需要写为[:index+1]，记得加一</p>
+<p>摆脱java的定性思维，切片的遍历采用range即可 不需要去一个个写for i=0开始遍历w</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Go 工具链</title>
