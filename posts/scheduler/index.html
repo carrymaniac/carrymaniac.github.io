@@ -1,27 +1,95 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Posts on UnhappyBrain</title>
-		<link>https://carrymaniac.github.io/posts/</link>
-		<description>Recent content in Posts on UnhappyBrain</description>
-		<generator>Hugo -- gohugo.io</generator>
-		<language>zh-hans</language>
-		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Wed, 08 Apr 2020 15:25:42 +0800</lastBuildDate>
-		<atom:link href="https://carrymaniac.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>如何设计一个爬虫系统？</title>
-			<link>https://carrymaniac.github.io/posts/scheduler/</link>
-			<pubDate>Wed, 08 Apr 2020 15:25:42 +0800</pubDate>
-			
-			<guid>https://carrymaniac.github.io/posts/scheduler/</guid>
-			<description>准确的来说，这篇文章并不算一个爬虫的教学，只是最近在复习之前学习的爬虫视频时做的笔记。
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="如何设计一个爬虫系统？">
+<meta itemprop="description" content="准确的来说，这篇文章并不算一个爬虫的教学，只是最近在复习之前学习的爬虫视频时做的笔记。
 其中Engine、Scheduler、worker三者的关系大概如图
 大体上结构如此，其中每个模块之间的数据传输均是使用chan来完成，比方说，Scheduler与Worker之间的Request传输使用一个chan string来传输，worker将处理完的数据传给Engine也是使用一个chan string来传输。
 上面这个最简单的图，也可以衍生出不同的结构:
  所有的Worker共用同一个chan string从Scheduler来获取数据进行处理, 每个worker和Scheduler之间有一个不共享的chan string来传输数据，Scheduler里有两个队列来缓存请求以及可用的（指目前没有其他request请求需要处理可工作的）worker，当每次同时有请求和worker时，将请求分发给worker。  具体实现请看代码：
-package scheduler import &amp;#34;fmt&amp;#34; //engine的主要行为，Run方法启动Engine，createWorker配置启动Worker type Engine interface { Run() createWorker(in chan string,out chan string,scheduler Scheduler) } type CurrentEngine struct { //调度器 	Scheduler Scheduler //工人数量 	WorkerCount int ItemChan chan string //用于存数据 	Processor Processor } //处理请求的函数,worker会调用这个Processor来进行处理数据 type Processor func(string) (string, error) func (c *CurrentEngine) createWorker(in chan string, out chan string, scheduler Scheduler) { //三个参数的含义 	//in chan string 用于 scheduler传输数据给worker进行处理 	//out chan string 用于worker处理完数据后将数据返回给Engine 	//scheduler Scheduler 当worker处理完成之后， 	//调用scheduler.</description>
-			<content type="html"><![CDATA[<p>准确的来说，这篇文章并不算一个爬虫的教学，只是最近在复习之前学习的爬虫视频时做的笔记。</p>
+package scheduler import &#34;fmt&#34; //engine的主要行为，Run方法启动Engine，createWorker配置启动Worker type Engine interface { Run() createWorker(in chan string,out chan string,scheduler Scheduler) } type CurrentEngine struct { //调度器 	Scheduler Scheduler //工人数量 	WorkerCount int ItemChan chan string //用于存数据 	Processor Processor } //处理请求的函数,worker会调用这个Processor来进行处理数据 type Processor func(string) (string, error) func (c *CurrentEngine) createWorker(in chan string, out chan string, scheduler Scheduler) { //三个参数的含义 	//in chan string 用于 scheduler传输数据给worker进行处理 	//out chan string 用于worker处理完数据后将数据返回给Engine 	//scheduler Scheduler 当worker处理完成之后， 	//调用scheduler.">
+<meta itemprop="datePublished" content="2020-04-08T15:25:42&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-08T15:25:42&#43;08:00" />
+<meta itemprop="wordCount" content="400">
+
+
+
+<meta itemprop="keywords" content="go," /><meta property="og:title" content="如何设计一个爬虫系统？" />
+<meta property="og:description" content="准确的来说，这篇文章并不算一个爬虫的教学，只是最近在复习之前学习的爬虫视频时做的笔记。
+其中Engine、Scheduler、worker三者的关系大概如图
+大体上结构如此，其中每个模块之间的数据传输均是使用chan来完成，比方说，Scheduler与Worker之间的Request传输使用一个chan string来传输，worker将处理完的数据传给Engine也是使用一个chan string来传输。
+上面这个最简单的图，也可以衍生出不同的结构:
+ 所有的Worker共用同一个chan string从Scheduler来获取数据进行处理, 每个worker和Scheduler之间有一个不共享的chan string来传输数据，Scheduler里有两个队列来缓存请求以及可用的（指目前没有其他request请求需要处理可工作的）worker，当每次同时有请求和worker时，将请求分发给worker。  具体实现请看代码：
+package scheduler import &#34;fmt&#34; //engine的主要行为，Run方法启动Engine，createWorker配置启动Worker type Engine interface { Run() createWorker(in chan string,out chan string,scheduler Scheduler) } type CurrentEngine struct { //调度器 	Scheduler Scheduler //工人数量 	WorkerCount int ItemChan chan string //用于存数据 	Processor Processor } //处理请求的函数,worker会调用这个Processor来进行处理数据 type Processor func(string) (string, error) func (c *CurrentEngine) createWorker(in chan string, out chan string, scheduler Scheduler) { //三个参数的含义 	//in chan string 用于 scheduler传输数据给worker进行处理 	//out chan string 用于worker处理完数据后将数据返回给Engine 	//scheduler Scheduler 当worker处理完成之后， 	//调用scheduler." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://carrymaniac.github.io/posts/scheduler/" />
+<meta property="article:published_time" content="2020-04-08T15:25:42+08:00" />
+<meta property="article:modified_time" content="2020-04-08T15:25:42+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何设计一个爬虫系统？"/>
+<meta name="twitter:description" content="准确的来说，这篇文章并不算一个爬虫的教学，只是最近在复习之前学习的爬虫视频时做的笔记。
+其中Engine、Scheduler、worker三者的关系大概如图
+大体上结构如此，其中每个模块之间的数据传输均是使用chan来完成，比方说，Scheduler与Worker之间的Request传输使用一个chan string来传输，worker将处理完的数据传给Engine也是使用一个chan string来传输。
+上面这个最简单的图，也可以衍生出不同的结构:
+ 所有的Worker共用同一个chan string从Scheduler来获取数据进行处理, 每个worker和Scheduler之间有一个不共享的chan string来传输数据，Scheduler里有两个队列来缓存请求以及可用的（指目前没有其他request请求需要处理可工作的）worker，当每次同时有请求和worker时，将请求分发给worker。  具体实现请看代码：
+package scheduler import &#34;fmt&#34; //engine的主要行为，Run方法启动Engine，createWorker配置启动Worker type Engine interface { Run() createWorker(in chan string,out chan string,scheduler Scheduler) } type CurrentEngine struct { //调度器 	Scheduler Scheduler //工人数量 	WorkerCount int ItemChan chan string //用于存数据 	Processor Processor } //处理请求的函数,worker会调用这个Processor来进行处理数据 type Processor func(string) (string, error) func (c *CurrentEngine) createWorker(in chan string, out chan string, scheduler Scheduler) { //三个参数的含义 	//in chan string 用于 scheduler传输数据给worker进行处理 	//out chan string 用于worker处理完数据后将数据返回给Engine 	//scheduler Scheduler 当worker处理完成之后， 	//调用scheduler."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>如何设计一个爬虫系统？</title>
+	<link rel="stylesheet" href="https://carrymaniac.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://carrymaniac.github.io/">UnhappyBrain</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://carrymaniac.github.io/posts/">Posts</a>
+				<a href="https://carrymaniac.github.io/tags/">Tags</a>
+				<a href="https://carrymaniac.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/carrymaniac" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://carrymaniac.github.io/posts/">Posts</a></li>
+			<li><a href="https://carrymaniac.github.io/tags/">Tags</a></li>
+			<li><a href="https://carrymaniac.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Apr 8, 2020</span></div>
+				<h1>如何设计一个爬虫系统？</h1>
+			</header>
+			<div class="content">
+				<p>准确的来说，这篇文章并不算一个爬虫的教学，只是最近在复习之前学习的爬虫视频时做的笔记。</p>
 <p>其中Engine、Scheduler、worker三者的关系大概如图</p>
 <p><img src="https://raw.githubusercontent.com/carrymaniac/pic/master/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png" alt=""></p>
 <p>大体上结构如此，其中每个模块之间的数据传输均是使用chan来完成，比方说，Scheduler与Worker之间的Request传输使用一个<code>chan string</code>来传输，worker将处理完的数据传给Engine也是使用一个chan string来传输。</p>
@@ -224,178 +292,38 @@ package scheduler import &amp;#34;fmt&amp;#34; //engine的主要行为，Run方�
   <span class="c1">//将初始的数据放进去Engine进行处理
 </span><span class="c1"></span>	<span class="nx">e</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;www.baidu.com&#34;</span><span class="p">)</span>
 <span class="p">}</span>
-</code></pre></div>]]></content>
-		</item>
-		
-		<item>
-			<title>如何使用Hugo&#43;GithubPage搭建一个简单的博客</title>
-			<link>https://carrymaniac.github.io/posts/how/</link>
-			<pubDate>Mon, 06 Apr 2020 15:52:49 +0800</pubDate>
-			
-			<guid>https://carrymaniac.github.io/posts/how/</guid>
-			<description>起因是因为在搜go相关知识的时候，搜到了一个博客，样式很好看，心想着也要搭建一个人博客，原先是想着自己开发手写一个博客出来，但是思考了一下这样的造轮子没什么意义。因此开始折腾如何使用hugo来搭建一个个人博客。
-第一步 下载安装hugo  这一部分建议参考 www.gohugo.org 这应该是一个Hugo粉丝自己的社区网站，在这里可以了解如何安装hugo mac用户用brew安装就行，会自动配置好env环境变量  第二步 配置Github Page  GithubPage的官方介绍：https://pages.github.com/ 简要的来说 就是创建好一个repository，主要是这个repository的名字需要写好，名字应该为username.github.io，项目的链接为https://github.com/username/username.github.io  第三步 Hugo站点 hugo new site changmen-blog # 新建一个叫changmen-blog的站点 hugo new post/my-first-post.md # 新建一篇叫my-first-post的文章，用markdown格式 //对文章进行编辑 hugo server -D # 启动本地服务器进行预览 # 此时可以使用127.0.0.1:1313进行预览博客样式 如果想对样式进行调整，可在hugo的样式库里面找到自己喜欢的主题，并按照其中的配置修改主目录下的config.toml，我现在用的是一个国人设计的hermit.
-第四部 部署到git 首先使用hugo进行构建，默认将静态站点保存到 &amp;ldquo;public&amp;rdquo; 目录。
-之后进入到public文件夹，git init进行初始化
-git init ## 这里carrymaniac/carrymaniac.github.io记得换成你自己的 git remote add origin git@github.com:carrymaniac/carrymaniac.github.io ## 因为origin的master在创建的时候新建了个Readme，所以需要合并一下 git pull origin master --allow-unrelated-histories git status git add . git commit -m &amp;#34;add new post&amp;#34; git push -u origin master 此时便完成了一个人博客的部署</description>
-			<content type="html"><![CDATA[<p>起因是因为在搜go相关知识的时候，搜到了一个博客，样式很好看，心想着也要搭建一个人博客，原先是想着自己开发手写一个博客出来，但是思考了一下这样的造轮子没什么意义。因此开始折腾如何使用hugo来搭建一个个人博客。</p>
-<h2 id="第一步-下载安装hugo">第一步 下载安装hugo</h2>
-<ul>
-<li>这一部分建议参考 <a href="http://www.gohugo.org">www.gohugo.org</a> 这应该是一个Hugo粉丝自己的社区网站，在这里可以了解如何安装hugo</li>
-<li>mac用户用brew安装就行，会自动配置好env环境变量</li>
-</ul>
-<h2 id="第二步-配置github-page">第二步 配置Github Page</h2>
-<ul>
-<li>GithubPage的官方介绍：https://pages.github.com/</li>
-<li>简要的来说 就是创建好一个repository，主要是这个repository的名字需要写好，名字应该为<code>username.github.io</code>，项目的链接为<code>https://github.com/username/username.github.io</code></li>
-</ul>
-<h2 id="第三步-hugo站点">第三步 Hugo站点</h2>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">hugo new site changmen-blog <span class="c1"># 新建一个叫changmen-blog的站点</span>
-hugo new post/my-first-post.md <span class="c1"># 新建一篇叫my-first-post的文章，用markdown格式</span>
-//对文章进行编辑
+</code></pre></div>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://carrymaniac.github.io/tags/go">go</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>400 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-08 15:25 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://carrymaniac.github.io/posts/how/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>如何使用Hugo&#43;GithubPage搭建一个简单的博客</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
 
-hugo server -D <span class="c1"># 启动本地服务器进行预览</span>
-<span class="c1"># 此时可以使用127.0.0.1:1313进行预览博客样式</span>
-</code></pre></div><p>如果想对样式进行调整，可在hugo的样式库里面找到自己喜欢的主题，并按照其中的配置修改主目录下的<code>config.toml</code>，我现在用的是一个国人设计的<code>hermit</code>.</p>
-<h2 id="第四部-部署到git">第四部 部署到git</h2>
-<p>首先使用<code>hugo</code>进行构建，默认将静态站点保存到 &ldquo;public&rdquo; 目录。</p>
-<p>之后进入到public文件夹，git init进行初始化</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">git init 
-<span class="c1">## 这里carrymaniac/carrymaniac.github.io记得换成你自己的</span>
-git remote add origin git@github.com:carrymaniac/carrymaniac.github.io
-<span class="c1">## 因为origin的master在创建的时候新建了个Readme，所以需要合并一下</span>
-git pull origin master --allow-unrelated-histories
-git status 
-git add .
-git commit -m <span class="s2">&#34;add new post&#34;</span>
-git push -u origin master
-</code></pre></div><p>此时便完成了一个人博客的部署</p>
-<p>博客的地址为 <a href="https://username.github.io">https://username.github.io</a></p>
-<h2 id="结语">结语</h2>
-<p>博客搭建大概就是这样，之后我会补充一个如何用Github作为图床，方便博客图片插入的小番外</p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>Golang从入门到放弃</title>
-			<link>https://carrymaniac.github.io/posts/go/</link>
-			<pubDate>Mon, 06 Apr 2020 15:04:51 +0800</pubDate>
-			
-			<guid>https://carrymaniac.github.io/posts/go/</guid>
-			<description>关于Go的工具链 go build 编译go文件 跨平台编译 env GOOS=linux GOARCH=amd64 go build
-go install 也是编译 但是与build最大的不同在于会将文件输出打包在pkg目录下
-go get 获取包 例如：go get -u xxx
-go fmt 统一代码风格和排版
-go test 测试 运行当前包目录下的tests，其中 go test -v 会打印详细信息
-所用到框架：    类型 名称     web框架 gin   日志库 lexkong/log   配置 spf13/viper   JWT dgrijalva/jwt-go   数据库ORM gorm    关于fmt包    值 含义     %v 值的默认格式表示   %+v 类似%v，但输出结构体时会添加字段名   %#v 值的Go语法表示   %T 打印值的类型   %% 百分号   %b 表示为二进制   %c 该值对应的unicode码值   %d 表示为十进制   %e %E 科学计数法，如-1234.</description>
-			<content type="html"><![CDATA[<h2 id="关于go的工具链">关于Go的工具链</h2>
-<p>go build 编译go文件
-跨平台编译 env GOOS=linux GOARCH=amd64 go build</p>
-<p>go install 也是编译
-但是与build最大的不同在于会将文件输出打包在pkg目录下</p>
-<p>go get 获取包
-例如：go get -u xxx</p>
-<p>go fmt 统一代码风格和排版</p>
-<p>go test 测试
-运行当前包目录下的tests，其中 go test -v 会打印详细信息</p>
-<p><img src="https://raw.githubusercontent.com/carrymaniac/pic/master/Golang" alt="GoTest"></p>
-<h2 id="所用到框架">所用到框架：</h2>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>web框架</td>
-<td>gin</td>
-</tr>
-<tr>
-<td>日志库</td>
-<td>lexkong/log</td>
-</tr>
-<tr>
-<td>配置</td>
-<td>spf13/viper</td>
-</tr>
-<tr>
-<td>JWT</td>
-<td>dgrijalva/jwt-go</td>
-</tr>
-<tr>
-<td>数据库ORM</td>
-<td>gorm</td>
-</tr>
-</tbody>
-</table>
-<h2 id="关于fmt包">关于fmt包</h2>
-<table>
-<thead>
-<tr>
-<th>值</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>%v</td>
-<td>值的默认格式表示</td>
-</tr>
-<tr>
-<td>%+v</td>
-<td>类似%v，但输出结构体时会添加字段名</td>
-</tr>
-<tr>
-<td>%#v</td>
-<td>值的Go语法表示</td>
-</tr>
-<tr>
-<td>%T</td>
-<td>打印值的类型</td>
-</tr>
-<tr>
-<td>%%</td>
-<td>百分号</td>
-</tr>
-<tr>
-<td>%b</td>
-<td>表示为二进制</td>
-</tr>
-<tr>
-<td>%c</td>
-<td>该值对应的unicode码值</td>
-</tr>
-<tr>
-<td>%d</td>
-<td>表示为十进制</td>
-</tr>
-<tr>
-<td>%e %E</td>
-<td>科学计数法，如-1234.456e+78</td>
-</tr>
-<tr>
-<td>%f %F</td>
-<td>有小数部分但无指数部分，如123.456</td>
-</tr>
-<tr>
-<td>%s</td>
-<td>直接输出字符串或者[]byte</td>
-</tr>
-<tr>
-<td>%q</td>
-<td>该值对应的双引号括起来的go语法字符串字面值，必要时会采用安全的转义表示</td>
-</tr>
-</tbody>
-</table>
-<h2 id="tip">Tip：</h2>
-<ul>
-<li>记住切片是从a到b-1切的：因此如果需要切到index为n的时候，需要写为[:index+1]，记得加一</li>
-<li>摆脱java的定性思维，切片的遍历采用range即可 不需要去一个个写for i=0开始遍历w</li>
-</ul>
-]]></content>
-		</item>
-		
-	</channel>
-</rss>
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://carrymaniac.github.io/">长门有一</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://carrymaniac.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://carrymaniac.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

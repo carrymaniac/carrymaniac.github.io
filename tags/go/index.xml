@@ -7,10 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hans</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 06 Apr 2020 15:04:51 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2020 15:25:42 +0800</lastBuildDate>
     
 	<atom:link href="https://carrymaniac.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如何设计一个爬虫系统？</title>
+      <link>https://carrymaniac.github.io/posts/scheduler/</link>
+      <pubDate>Wed, 08 Apr 2020 15:25:42 +0800</pubDate>
+      
+      <guid>https://carrymaniac.github.io/posts/scheduler/</guid>
+      <description>准确的来说，这篇文章并不算一个爬虫的教学，只是最近在复习之前学习的爬虫视频时做的笔记。
+其中Engine、Scheduler、worker三者的关系大概如图
+大体上结构如此，其中每个模块之间的数据传输均是使用chan来完成，比方说，Scheduler与Worker之间的Request传输使用一个chan string来传输，worker将处理完的数据传给Engine也是使用一个chan string来传输。
+上面这个最简单的图，也可以衍生出不同的结构:
+ 所有的Worker共用同一个chan string从Scheduler来获取数据进行处理, 每个worker和Scheduler之间有一个不共享的chan string来传输数据，Scheduler里有两个队列来缓存请求以及可用的（指目前没有其他request请求需要处理可工作的）worker，当每次同时有请求和worker时，将请求分发给worker。  具体实现请看代码：
+package scheduler import &amp;#34;fmt&amp;#34; //engine的主要行为，Run方法启动Engine，createWorker配置启动Worker type Engine interface { Run() createWorker(in chan string,out chan string,scheduler Scheduler) } type CurrentEngine struct { //调度器 	Scheduler Scheduler //工人数量 	WorkerCount int ItemChan chan string //用于存数据 	Processor Processor } //处理请求的函数,worker会调用这个Processor来进行处理数据 type Processor func(string) (string, error) func (c *CurrentEngine) createWorker(in chan string, out chan string, scheduler Scheduler) { //三个参数的含义 	//in chan string 用于 scheduler传输数据给worker进行处理 	//out chan string 用于worker处理完数据后将数据返回给Engine 	//scheduler Scheduler 当worker处理完成之后， 	//调用scheduler.</description>
+    </item>
     
     <item>
       <title>Golang从入门到放弃</title>
