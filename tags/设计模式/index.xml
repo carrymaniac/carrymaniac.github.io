@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设计模式 on UnhappyBrain</title>
+    <link>https://carrymaniac.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 设计模式 on UnhappyBrain</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-hans</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 12 Apr 2020 16:53:26 +0800</lastBuildDate>
+    
+	<atom:link href="https://carrymaniac.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>设计模式</title>
+      <link>https://carrymaniac.github.io/posts/dp/</link>
+      <pubDate>Sun, 12 Apr 2020 16:53:26 +0800</pubDate>
+      
+      <guid>https://carrymaniac.github.io/posts/dp/</guid>
+      <description>记录一下几个最常问常考的设计模式，供自己回忆
+单例设计模式 简单点说，就是一个应用程序中，某个类的实例对象只有一个，你没有办法去new，因为构造器是被private修饰的，一般通过getInstance()的方法来获取它们的实例。
+//线程不安全式写法 public class Singleton { private static Singleton singleton; private Singleton(){} public static Singleton getInstance(){ if(singleton == null){ singleton = new Singleton(); } return singleton; } } 懒汉式，即只有在第一次调用的时候才进行初始化
+public class Singleton{ private static Singleton instance; private Singleton(){} public static synchronized Singleton getInstance(){ if(instance==null){ instance = new Singleton(); } return instance; } } 饿汉写法,在创建类的时候就完成初始化
+public class Singleton{ private static Singleton instance = new Singleton(); private Singleton(){} public static Singleton getInstance(){ return instance; } } 双重校验锁，这个较为常考</description>
+    </item>
+    
+  </channel>
+</rss>
