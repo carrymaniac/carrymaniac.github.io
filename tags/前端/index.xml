@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>前端 on UnhappyBrain</title>
+    <link>https://carrymaniac.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
+    <description>Recent content in 前端 on UnhappyBrain</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-hans</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 19 Apr 2020 23:18:17 +0800</lastBuildDate>
+    
+	<atom:link href="https://carrymaniac.github.io/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>小后台学Vue</title>
+      <link>https://carrymaniac.github.io/posts/vue-learn/</link>
+      <pubDate>Sun, 19 Apr 2020 23:18:17 +0800</pubDate>
+      
+      <guid>https://carrymaniac.github.io/posts/vue-learn/</guid>
+      <description>[TOC]
+vue指令 v-text：设置替换普通文本，和{{ }}效果类似： &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1.0&amp;#34;&amp;gt; &amp;lt;meta http-equiv=&amp;#34;X-UA-Compatible&amp;#34; content=&amp;#34;ie=edge&amp;#34;&amp;gt; &amp;lt;title&amp;gt;vue&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div id=&amp;#34;app&amp;#34;&amp;gt; &amp;lt;h2 id=&amp;#34;data&amp;#34;&amp;gt;这是一个信息:{{message}}&amp;lt;/h2&amp;gt; &amp;lt;div v-text=&amp;#34;info&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;script src=&amp;#34;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; var app = new Vue({ el:&amp;#34;#app&amp;#34;, data:{ message:&amp;#34;这是gdou&amp;#34;, info:&amp;#34;这是info&amp;#34; } }) &amp;lt;/script&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; v-html :用于拼接html代码块，与v-text有所区别 &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1.0&amp;#34;&amp;gt; &amp;lt;meta http-equiv=&amp;#34;X-UA-Compatible&amp;#34; content=&amp;#34;ie=edge&amp;#34;&amp;gt; &amp;lt;title&amp;gt;vue&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div id=&amp;#34;app&amp;#34;&amp;gt; &amp;lt;h2 id=&amp;#34;data&amp;#34;&amp;gt;这是一个信息:{{message}}&amp;lt;/h2&amp;gt; &amp;lt;div v-text=&amp;#34;info&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div v-html=&amp;#34;htmlcode&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;script src=&amp;#34;https://cdn.</description>
+    </item>
+    
+  </channel>
+</rss>

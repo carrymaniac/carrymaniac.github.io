@@ -3,17 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://carrymaniac.github.io/tags/java/</loc>
-    <lastmod>2020-04-12T16:53:26+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://carrymaniac.github.io/posts/</loc>
-    <lastmod>2020-04-12T16:53:26+08:00</lastmod>
+    <lastmod>2020-04-19T23:18:17+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://carrymaniac.github.io/tags/</loc>
+    <lastmod>2020-04-19T23:18:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://carrymaniac.github.io/tags/%E5%89%8D%E7%AB%AF/</loc>
+    <lastmod>2020-04-19T23:18:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://carrymaniac.github.io/posts/vue-learn/</loc>
+    <lastmod>2020-04-19T23:18:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://carrymaniac.github.io/tags/java/</loc>
     <lastmod>2020-04-12T16:53:26+08:00</lastmod>
   </url>
   

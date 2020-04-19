@@ -1,25 +1,85 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Posts on UnhappyBrain</title>
-		<link>https://carrymaniac.github.io/posts/</link>
-		<description>Recent content in Posts on UnhappyBrain</description>
-		<generator>Hugo -- gohugo.io</generator>
-		<language>zh-hans</language>
-		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Sun, 19 Apr 2020 23:18:17 +0800</lastBuildDate>
-		<atom:link href="https://carrymaniac.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>小后台学Vue</title>
-			<link>https://carrymaniac.github.io/posts/vue-learn/</link>
-			<pubDate>Sun, 19 Apr 2020 23:18:17 +0800</pubDate>
-			
-			<guid>https://carrymaniac.github.io/posts/vue-learn/</guid>
-			<description>[TOC]
-vue指令 v-text：设置替换普通文本，和{{ }}效果类似： &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1.0&amp;#34;&amp;gt; &amp;lt;meta http-equiv=&amp;#34;X-UA-Compatible&amp;#34; content=&amp;#34;ie=edge&amp;#34;&amp;gt; &amp;lt;title&amp;gt;vue&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div id=&amp;#34;app&amp;#34;&amp;gt; &amp;lt;h2 id=&amp;#34;data&amp;#34;&amp;gt;这是一个信息:{{message}}&amp;lt;/h2&amp;gt; &amp;lt;div v-text=&amp;#34;info&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;script src=&amp;#34;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; var app = new Vue({ el:&amp;#34;#app&amp;#34;, data:{ message:&amp;#34;这是gdou&amp;#34;, info:&amp;#34;这是info&amp;#34; } }) &amp;lt;/script&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; v-html :用于拼接html代码块，与v-text有所区别 &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1.0&amp;#34;&amp;gt; &amp;lt;meta http-equiv=&amp;#34;X-UA-Compatible&amp;#34; content=&amp;#34;ie=edge&amp;#34;&amp;gt; &amp;lt;title&amp;gt;vue&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div id=&amp;#34;app&amp;#34;&amp;gt; &amp;lt;h2 id=&amp;#34;data&amp;#34;&amp;gt;这是一个信息:{{message}}&amp;lt;/h2&amp;gt; &amp;lt;div v-text=&amp;#34;info&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div v-html=&amp;#34;htmlcode&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;script src=&amp;#34;https://cdn.</description>
-			<content type="html"><![CDATA[<p>[TOC]</p>
-<h2 id="vue指令">vue指令</h2>
-<h3 id="v-text设置替换普通文本和-效果类似">v-text：设置替换普通文本，和{{ }}效果类似：</h3>
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="小后台学Vue">
+<meta itemprop="description" content="[TOC]
+vue指令 v-text：设置替换普通文本，和{{ }}效果类似： &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;ie=edge&#34;&gt; &lt;title&gt;vue&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34;&gt; &lt;h2 id=&#34;data&#34;&gt;这是一个信息:{{message}}&lt;/h2&gt; &lt;div v-text=&#34;info&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; var app = new Vue({ el:&#34;#app&#34;, data:{ message:&#34;这是gdou&#34;, info:&#34;这是info&#34; } }) &lt;/script&gt; &lt;/body&gt; &lt;/html&gt; v-html :用于拼接html代码块，与v-text有所区别 &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;ie=edge&#34;&gt; &lt;title&gt;vue&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34;&gt; &lt;h2 id=&#34;data&#34;&gt;这是一个信息:{{message}}&lt;/h2&gt; &lt;div v-text=&#34;info&#34;&gt;&lt;/div&gt; &lt;div v-html=&#34;htmlcode&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.">
+<meta itemprop="datePublished" content="2020-04-19T23:18:17&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-19T23:18:17&#43;08:00" />
+<meta itemprop="wordCount" content="685">
+
+
+
+<meta itemprop="keywords" content="前端," /><meta property="og:title" content="小后台学Vue" />
+<meta property="og:description" content="[TOC]
+vue指令 v-text：设置替换普通文本，和{{ }}效果类似： &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;ie=edge&#34;&gt; &lt;title&gt;vue&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34;&gt; &lt;h2 id=&#34;data&#34;&gt;这是一个信息:{{message}}&lt;/h2&gt; &lt;div v-text=&#34;info&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; var app = new Vue({ el:&#34;#app&#34;, data:{ message:&#34;这是gdou&#34;, info:&#34;这是info&#34; } }) &lt;/script&gt; &lt;/body&gt; &lt;/html&gt; v-html :用于拼接html代码块，与v-text有所区别 &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;ie=edge&#34;&gt; &lt;title&gt;vue&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34;&gt; &lt;h2 id=&#34;data&#34;&gt;这是一个信息:{{message}}&lt;/h2&gt; &lt;div v-text=&#34;info&#34;&gt;&lt;/div&gt; &lt;div v-html=&#34;htmlcode&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://carrymaniac.github.io/posts/vue-learn/" />
+<meta property="article:published_time" content="2020-04-19T23:18:17+08:00" />
+<meta property="article:modified_time" content="2020-04-19T23:18:17+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="小后台学Vue"/>
+<meta name="twitter:description" content="[TOC]
+vue指令 v-text：设置替换普通文本，和{{ }}效果类似： &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;ie=edge&#34;&gt; &lt;title&gt;vue&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34;&gt; &lt;h2 id=&#34;data&#34;&gt;这是一个信息:{{message}}&lt;/h2&gt; &lt;div v-text=&#34;info&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; var app = new Vue({ el:&#34;#app&#34;, data:{ message:&#34;这是gdou&#34;, info:&#34;这是info&#34; } }) &lt;/script&gt; &lt;/body&gt; &lt;/html&gt; v-html :用于拼接html代码块，与v-text有所区别 &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt; &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;ie=edge&#34;&gt; &lt;title&gt;vue&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34;&gt; &lt;h2 id=&#34;data&#34;&gt;这是一个信息:{{message}}&lt;/h2&gt; &lt;div v-text=&#34;info&#34;&gt;&lt;/div&gt; &lt;div v-html=&#34;htmlcode&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>小后台学Vue</title>
+	<link rel="stylesheet" href="https://carrymaniac.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css" integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://carrymaniac.github.io/">UnhappyBrain</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://carrymaniac.github.io/posts/">Posts</a>
+				<a href="https://carrymaniac.github.io/tags/">Tags</a>
+				<a href="https://carrymaniac.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/carrymaniac" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://carrymaniac.github.io/posts/">Posts</a></li>
+			<li><a href="https://carrymaniac.github.io/tags/">Tags</a></li>
+			<li><a href="https://carrymaniac.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Apr 19, 2020</span></div>
+				<h1>小后台学Vue</h1>
+			</header>
+			<div class="content">
+				<p>[TOC]</p>
+<h2 id="vue指令">vue指令<a href="#vue指令" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h3 id="v-text设置替换普通文本和-效果类似">v-text：设置替换普通文本，和{{ }}效果类似：<a href="#v-text设置替换普通文本和-效果类似" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">    <span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -46,7 +106,7 @@ vue指令 v-text：设置替换普通文本，和{{ }}效果类似： &amp;lt;!D
     <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div><h3 id="v-html-用于拼接html代码块与v-text有所区别">v-html :用于拼接html代码块，与v-text有所区别</h3>
+</code></pre></div><h3 id="v-html-用于拼接html代码块与v-text有所区别">v-html :用于拼接html代码块，与v-text有所区别<a href="#v-html-用于拼接html代码块与v-text有所区别" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -75,7 +135,7 @@ vue指令 v-text：设置替换普通文本，和{{ }}效果类似： &amp;lt;!D
     <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div><h3 id="v-on-绑定事件">v-on ：绑定事件</h3>
+</code></pre></div><h3 id="v-on-绑定事件">v-on ：绑定事件<a href="#v-on-绑定事件" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>其中有v-on:click=&quot;doit&rdquo;(单击事件)
 v-on:monseenter=&quot;doit&rdquo;(鼠标进入事件)
 v-on:dblclick=&quot;doit&rdquo;(鼠标双击事件)
@@ -119,7 +179,7 @@ v-on:dblclick=&quot;doit&rdquo;(鼠标双击事件)
         <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div><h3 id="实例代码计数器">实例代码：计数器</h3>
+</code></pre></div><h3 id="实例代码计数器">实例代码：计数器<a href="#实例代码计数器" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>代码如下：</p>
 <div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
@@ -207,9 +267,9 @@ v-on:dblclick=&quot;doit&rdquo;(鼠标双击事件)
     <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div><h3 id="v-if">v-if</h3>
+</code></pre></div><h3 id="v-if">v-if<a href="#v-if" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>v-if和v-show基本上差不多，和v-show不同的是，v-show不显示的时候是修改了对象的dispaly的属性(display:none),而if是直接将对象在dom树中删除，在实际代码中，如果该元素频繁切换，则使用v-show，因为频繁操作dom树的性能代价较大。而如果不经常切换的元素，则使用v-if即可</p>
-<h3 id="v-bind">v-bind</h3>
+<h3 id="v-bind">v-bind<a href="#v-bind" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>用于修改元素的属性：例如：</p>
 <div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
@@ -254,7 +314,7 @@ v-on:dblclick=&quot;doit&rdquo;(鼠标双击事件)
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </code></pre></div><p>其中，v-bind 可以省略为,即使用:</p>
-<h3 id="轮播图">轮播图</h3>
+<h3 id="轮播图">轮播图<a href="#轮播图" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -310,11 +370,11 @@ v-on:dblclick=&quot;doit&rdquo;(鼠标双击事件)
     <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div><h3 id="vue绑定">Vue绑定</h3>
+</code></pre></div><h3 id="vue绑定">Vue绑定<a href="#vue绑定" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>使用v-model进行的绑定是双向的绑定
 而v-bind只是单向的，显示输出</p>
 <hr>
-<h2 id="过滤器">过滤器</h2>
+<h2 id="过滤器">过滤器<a href="#过滤器" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>过滤器</p>
 <p>可以用在mustache插值和v-bind表达式</p>
 <p>格式：{{name|nameope}}</p>
@@ -341,7 +401,7 @@ v-on:dblclick=&quot;doit&rdquo;(鼠标双击事件)
     <span class="nx">filterName</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">format</span><span class="p">)</span> <span class="p">{}</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><h2 id="自定义指令">自定义指令</h2>
+</code></pre></div><h2 id="自定义指令">自定义指令<a href="#自定义指令" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <ul>
 <li>作用：进行DOM操作</li>
 <li>使用场景：对纯 DOM 元素进行底层操作，比如：文本框获得焦点</li>
@@ -389,476 +449,63 @@ v-on:dblclick=&quot;doit&rdquo;(鼠标双击事件)
     <span class="nx">directiveName</span><span class="o">:</span> <span class="p">{</span> <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">})</span>
-</code></pre></div><h2 id="vue-cli脚手架">VUE-CLI脚手架</h2>
-<h2 id="axios">axios</h2>
-]]></content>
-		</item>
-		
-		<item>
-			<title>设计模式</title>
-			<link>https://carrymaniac.github.io/posts/dp/</link>
-			<pubDate>Sun, 12 Apr 2020 16:53:26 +0800</pubDate>
-			
-			<guid>https://carrymaniac.github.io/posts/dp/</guid>
-			<description>记录一下几个最常问常考的设计模式，供自己回忆
-单例设计模式 简单点说，就是一个应用程序中，某个类的实例对象只有一个，你没有办法去new，因为构造器是被private修饰的，一般通过getInstance()的方法来获取它们的实例。
-//线程不安全式写法 public class Singleton { private static Singleton singleton; private Singleton(){} public static Singleton getInstance(){ if(singleton == null){ singleton = new Singleton(); } return singleton; } } 懒汉式，即只有在第一次调用的时候才进行初始化
-public class Singleton{ private static Singleton instance; private Singleton(){} public static synchronized Singleton getInstance(){ if(instance==null){ instance = new Singleton(); } return instance; } } 饿汉写法,在创建类的时候就完成初始化
-public class Singleton{ private static Singleton instance = new Singleton(); private Singleton(){} public static Singleton getInstance(){ return instance; } } 双重校验锁，这个较为常考</description>
-			<content type="html"><![CDATA[<p>记录一下几个最常问常考的设计模式，供自己回忆</p>
-<h2 id="单例设计模式">单例设计模式</h2>
-<p>简单点说，就是一个应用程序中，某个类的实例对象只有一个，你没有办法去new，因为构造器是被private修饰的，一般通过getInstance()的方法来获取它们的实例。</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//线程不安全式写法
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">singleton</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){}</span>
+</code></pre></div><h2 id="vue-cli脚手架">VUE-CLI脚手架<a href="#vue-cli脚手架" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h2 id="axios">axios<a href="#axios" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">(){</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">singleton</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-            <span class="n">singleton</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">singleton</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div><p>懒汉式，即只有在第一次调用的时候才进行初始化</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span><span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){}</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">(){</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">instance</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
-            <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div><p>饿汉写法,在创建类的时候就完成初始化</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span><span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
-    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){}</span>
-    <span class="kd">public</span> <span class="kd">static</span>  <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">(){</span>
-            <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div><p>双重校验锁，这个较为常考</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span><span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">volatile</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){}</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">(){</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">instance</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
-            <span class="kd">synchronized</span> <span class="o">(</span><span class="n">Singleton</span><span class="o">.</span><span class="na">class</span><span class="o">){</span>
-                <span class="k">if</span><span class="o">(</span><span class="n">instance</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
-                    <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div><p>静态内部类</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span><span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">volatile</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){}</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">(){</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">instance</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
-            <span class="kd">synchronized</span> <span class="o">(</span><span class="n">Singleton</span><span class="o">.</span><span class="na">class</span><span class="o">){</span>
-                <span class="k">if</span><span class="o">(</span><span class="n">instance</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
-                    <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>]]></content>
-		</item>
-		
-		<item>
-			<title>如何设计一个爬虫系统？</title>
-			<link>https://carrymaniac.github.io/posts/scheduler/</link>
-			<pubDate>Wed, 08 Apr 2020 15:25:42 +0800</pubDate>
-			
-			<guid>https://carrymaniac.github.io/posts/scheduler/</guid>
-			<description>准确的来说，这篇文章并不算一个爬虫的教学，只是最近在复习之前学习的爬虫视频时做的笔记。
-其中Engine、Scheduler、worker三者的关系大概如图
-大体上结构如此，其中每个模块之间的数据传输均是使用chan来完成，比方说，Scheduler与Worker之间的Request传输使用一个chan string来传输，worker将处理完的数据传给Engine也是使用一个chan string来传输。
-上面这个最简单的图，也可以衍生出不同的结构:
- 所有的Worker共用同一个chan string从Scheduler来获取数据进行处理, 每个worker和Scheduler之间有一个不共享的chan string来传输数据，Scheduler里有两个队列来缓存请求以及可用的（指目前没有其他request请求需要处理可工作的）worker，当每次同时有请求和worker时，将请求分发给worker。  具体实现请看代码：
-package scheduler import &amp;#34;fmt&amp;#34; //engine的主要行为，Run方法启动Engine，createWorker配置启动Worker type Engine interface { Run() createWorker(in chan string,out chan string,scheduler Scheduler) } type CurrentEngine struct { //调度器 	Scheduler Scheduler //工人数量 	WorkerCount int ItemChan chan string //用于存数据 	Processor Processor } //处理请求的函数,worker会调用这个Processor来进行处理数据 type Processor func(string) (string, error) func (c *CurrentEngine) createWorker(in chan string, out chan string, scheduler Scheduler) { //三个参数的含义 	//in chan string 用于 scheduler传输数据给worker进行处理 	//out chan string 用于worker处理完数据后将数据返回给Engine 	//scheduler Scheduler 当worker处理完成之后， 	//调用scheduler.</description>
-			<content type="html"><![CDATA[<p>准确的来说，这篇文章并不算一个爬虫的教学，只是最近在复习之前学习的爬虫视频时做的笔记。</p>
-<p>其中Engine、Scheduler、worker三者的关系大概如图</p>
-<p><img src="https://raw.githubusercontent.com/carrymaniac/pic/master/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png" alt=""></p>
-<p>大体上结构如此，其中每个模块之间的数据传输均是使用chan来完成，比方说，Scheduler与Worker之间的Request传输使用一个<code>chan string</code>来传输，worker将处理完的数据传给Engine也是使用一个chan string来传输。</p>
-<p>上面这个最简单的图，也可以衍生出不同的结构:</p>
-<ol>
-<li>所有的Worker共用同一个chan string从Scheduler来获取数据进行处理,</li>
-<li>每个worker和Scheduler之间有一个不共享的chan string来传输数据，Scheduler里有两个队列来缓存请求以及可用的（指目前没有其他request请求需要处理可工作的）worker，当每次同时有请求和worker时，将请求分发给worker。</li>
-</ol>
-<p>具体实现请看代码：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">scheduler</span>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://carrymaniac.github.io/tags/%E5%89%8D%E7%AB%AF">前端</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>685 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-19 23:18 &#43;0800</p>
+			</footer>
+		</article>
+		<aside id="toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#vue指令">vue指令</a>
+      <ul>
+        <li><a href="#v-text设置替换普通文本和-效果类似">v-text：设置替换普通文本，和{{ }}效果类似：</a></li>
+        <li><a href="#v-html-用于拼接html代码块与v-text有所区别">v-html :用于拼接html代码块，与v-text有所区别</a></li>
+        <li><a href="#v-on-绑定事件">v-on ：绑定事件</a></li>
+        <li><a href="#实例代码计数器">实例代码：计数器</a></li>
+        <li><a href="#v-if">v-if</a></li>
+        <li><a href="#v-bind">v-bind</a></li>
+        <li><a href="#轮播图">轮播图</a></li>
+        <li><a href="#vue绑定">Vue绑定</a></li>
+      </ul>
+    </li>
+    <li><a href="#过滤器">过滤器</a></li>
+    <li><a href="#自定义指令">自定义指令</a></li>
+    <li><a href="#vue-cli脚手架">VUE-CLI脚手架</a></li>
+    <li><a href="#axios">axios</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://carrymaniac.github.io/posts/dp/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>设计模式</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
 
-<span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-
-<span class="c1">//engine的主要行为，Run方法启动Engine，createWorker配置启动Worker
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Engine</span> <span class="kd">interface</span> <span class="p">{</span>
-	<span class="nf">Run</span><span class="p">()</span>
-	<span class="nf">createWorker</span><span class="p">(</span><span class="nx">in</span> <span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span><span class="nx">out</span> <span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span><span class="nx">scheduler</span> <span class="nx">Scheduler</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">type</span> <span class="nx">CurrentEngine</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="c1">//调度器
-</span><span class="c1"></span>	<span class="nx">Scheduler</span> <span class="nx">Scheduler</span>
-	<span class="c1">//工人数量
-</span><span class="c1"></span>	<span class="nx">WorkerCount</span> <span class="kt">int</span>
-  <span class="nx">ItemChan</span>         <span class="kd">chan</span> <span class="kt">string</span> <span class="c1">//用于存数据
-</span><span class="c1"></span>	<span class="nx">Processor</span> <span class="nx">Processor</span>
-<span class="p">}</span>
-	<span class="c1">//处理请求的函数,worker会调用这个Processor来进行处理数据
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Processor</span> <span class="kd">func</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://carrymaniac.github.io/">长门有一</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://carrymaniac.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
 
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">CurrentEngine</span><span class="p">)</span> <span class="nf">createWorker</span><span class="p">(</span><span class="nx">in</span> <span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">out</span> <span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">scheduler</span> <span class="nx">Scheduler</span><span class="p">)</span> <span class="p">{</span>
-	<span class="c1">//三个参数的含义
-</span><span class="c1"></span>	<span class="c1">//in chan string 用于 scheduler传输数据给worker进行处理
-</span><span class="c1"></span>	<span class="c1">//out chan string 用于worker处理完数据后将数据返回给Engine
-</span><span class="c1"></span>	<span class="c1">//scheduler Scheduler 当worker处理完成之后，
-</span><span class="c1"></span>	<span class="c1">//调用scheduler.WorkerReady将自己放进scheduler的WorkerChan中去
-</span><span class="c1"></span>	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="nx">scheduler</span><span class="p">.</span><span class="nf">WorkerReady</span><span class="p">(</span><span class="nx">in</span><span class="p">)</span>
-			<span class="c1">//从in中获取请求数据
-</span><span class="c1"></span>			<span class="nx">request</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">in</span>
-			<span class="c1">//调用Engine里的处理函数进行处理
-</span><span class="c1"></span>			<span class="nx">result</span><span class="p">,</span> <span class="nx">e</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">Processor</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span>
-			<span class="k">if</span> <span class="nx">e</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
-				<span class="c1">//不进行处理，进行下一个请求处理
-</span><span class="c1"></span>			<span class="p">}</span>
-			<span class="c1">//将结果传输出去
-</span><span class="c1"></span>			<span class="nx">out</span> <span class="o">&lt;-</span> <span class="nx">result</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
 
-<span class="p">}</span>
+	<script src="https://carrymaniac.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">CurrentEngine</span><span class="p">)</span> <span class="nf">Run</span><span class="p">(</span><span class="nx">requests</span> <span class="o">...</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-	<span class="c1">//启动Scheduler
-</span><span class="c1"></span>	<span class="nx">c</span><span class="p">.</span><span class="nx">Scheduler</span><span class="p">.</span><span class="nf">Run</span><span class="p">()</span>
-	<span class="c1">//out用于接收处理完的结果
-</span><span class="c1"></span>	<span class="nx">out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span>
+</body>
 
-	<span class="c1">//启动多个Worker
-</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="p">&lt;</span><span class="nx">c</span><span class="p">.</span><span class="nx">WorkerCount</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">{</span>
-		<span class="nx">c</span><span class="p">.</span><span class="nf">createWorker</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Scheduler</span><span class="p">.</span><span class="nf">WorkerChan</span><span class="p">(),</span><span class="nx">out</span><span class="p">,</span><span class="nx">c</span><span class="p">.</span><span class="nx">Scheduler</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="c1">//提交任务
-</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span><span class="nx">request</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">requests</span><span class="p">{</span>
-		<span class="nx">c</span><span class="p">.</span><span class="nx">Scheduler</span><span class="p">.</span><span class="nf">Submit</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="c1">//从out里取出数据
-</span><span class="c1"></span>	<span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span>
-	<span class="k">for</span><span class="p">{</span>
-		<span class="nx">result</span><span class="o">:=</span> <span class="o">&lt;-</span> <span class="nx">out</span>
-		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
-    <span class="c1">//将数据放到itemChan，供engine外的其他模块（例如数据库存储等）去读取数据并持久化
-</span><span class="c1"></span>    <span class="nx">c</span><span class="p">.</span><span class="nx">itemChan</span> <span class="o">&lt;-</span> <span class="nx">result</span>
-		<span class="c1">//这里如果是一个爬虫的话，就会继续讲result中的某些数据取出，再次投进Scheduler中给worker进行处理
-</span><span class="c1"></span>		<span class="c1">//这里我假装从result中获取到了新的request
-</span><span class="c1"></span>		<span class="nx">newRequests</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-		<span class="k">for</span> <span class="nx">k</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span><span class="nx">k</span><span class="p">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="nx">k</span><span class="o">++</span><span class="p">{</span>
-			<span class="nx">newRequests</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">newRequests</span><span class="p">,</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprint</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span><span class="nx">i</span><span class="p">))</span>
-		<span class="p">}</span>
-		<span class="c1">//将新的Request放进Scheduler中去
-</span><span class="c1"></span>		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span><span class="nx">request</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">newRequests</span><span class="p">{</span>
-			<span class="nx">c</span><span class="p">.</span><span class="nx">Scheduler</span><span class="p">.</span><span class="nf">Submit</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div><p>Scheduler的代码如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-GO" data-lang="GO"><span class="kn">package</span> <span class="nx">scheduler</span>
-
-
-<span class="cm">/**
-</span><span class="cm">	什么是scheduler？
-</span><span class="cm">	基本上形成了engine --提交任务（数据）--&gt;scheduler --将任务分派给各个Worker --&gt;Work将数据返回给Engine
-</span><span class="cm">	Scheduler在这个流程中充当了一个调度器的功能，调度Worker进行工作
-</span><span class="cm"> */</span>
-
-
-<span class="c1">//定义行为
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Scheduler</span> <span class="kd">interface</span> <span class="p">{</span>
-  <span class="c1">//Engine通过Submit方法将请求发给Scheduler，然后由Scheduler分发调配任务给Worker
-</span><span class="c1"></span>	<span class="nf">Submit</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span>
-	<span class="nf">Run</span><span class="p">()</span>
-	<span class="c1">// 返回一个传输数据给worker的通道
-</span><span class="c1"></span>	<span class="nf">WorkerChan</span><span class="p">()</span> <span class="kd">chan</span> <span class="kt">string</span>
-  <span class="c1">// worker会调用这个方法来告知Scheduler自己已经就绪，可以下发任务给它了
-</span><span class="c1"></span>	<span class="nf">WorkerReady</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="c1">//SimpleScheduler,这个Scheduler的worker们共用一个chan，所有的worker都会去一个chan中争抢任务
-</span><span class="c1">//可能会造成很多的worker协程一直阻塞浪费资源
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">SimpleScheduler</span> <span class="kd">struct</span> <span class="p">{</span>
-		<span class="nx">requestChan</span> <span class="kd">chan</span> <span class="kt">string</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">SimpleScheduler</span><span class="p">)</span> <span class="nf">WorkerReady</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">SimpleScheduler</span><span class="p">)</span> <span class="nf">Submit</span><span class="p">(</span><span class="nx">submit</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-	<span class="c1">//起一个go来提交任务给Worker们
-</span><span class="c1"></span>	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="nx">s</span><span class="p">.</span><span class="nx">requestChan</span> <span class="o">&lt;-</span> <span class="nx">submit</span>
-	<span class="p">}()</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">SimpleScheduler</span><span class="p">)</span> <span class="nf">Run</span><span class="p">()</span> <span class="p">{</span>
-	<span class="c1">//启动调度器，make一个chanel
-</span><span class="c1"></span>	<span class="nx">s</span><span class="p">.</span><span class="nx">requestChan</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="c1">//共用一个Chan，因此每次都直接返回同一个chan
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">SimpleScheduler</span><span class="p">)</span> <span class="nf">WorkerChan</span><span class="p">()</span> <span class="kd">chan</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">requestChan</span>
-<span class="p">}</span>
-
-<span class="c1">//队列版的调度器
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">QueueScheduler</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">requestChan</span> <span class="kd">chan</span> <span class="kt">string</span>
-	<span class="nx">workerChan</span> <span class="kd">chan</span> <span class="kd">chan</span> <span class="kt">string</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">QueueScheduler</span><span class="p">)</span> <span class="nf">WorkerReady</span><span class="p">(</span><span class="nx">w</span> <span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-	<span class="c1">//当worker就绪了可以进行下一个处理的时候，将其加入到workChan里去
-</span><span class="c1"></span>	<span class="nx">q</span><span class="p">.</span><span class="nx">workerChan</span> <span class="o">&lt;-</span> <span class="nx">w</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">QueueScheduler</span><span class="p">)</span> <span class="nf">Submit</span><span class="p">(</span><span class="nx">sub</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">q</span><span class="p">.</span><span class="nx">requestChan</span> <span class="o">&lt;-</span> <span class="nx">sub</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">QueueScheduler</span><span class="p">)</span> <span class="nf">Run</span><span class="p">()</span> <span class="p">{</span>
-	<span class="c1">//先初始化两个chan
-</span><span class="c1"></span>	<span class="nx">q</span><span class="p">.</span><span class="nx">requestChan</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span>
-	<span class="nx">q</span><span class="p">.</span><span class="nx">workerChan</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="kd">var</span> <span class="nx">requestQ</span> <span class="p">[]</span><span class="kt">string</span>
-		<span class="kd">var</span> <span class="nx">workerQ</span> <span class="p">[]</span><span class="kd">chan</span> <span class="kt">string</span>
-
-		<span class="k">for</span><span class="p">{</span>
-			<span class="kd">var</span> <span class="nx">activeWorker</span> <span class="kd">chan</span> <span class="kt">string</span>
-			<span class="kd">var</span> <span class="nx">activeRequest</span> <span class="kt">string</span>
-			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">requestQ</span><span class="p">)&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">workerQ</span><span class="p">)&gt;</span><span class="mi">0</span><span class="p">{</span>
-				<span class="c1">//取出任务和worker
-</span><span class="c1"></span>				<span class="nx">activeRequest</span> <span class="p">=</span> <span class="nx">requestQ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-				<span class="nx">activeWorker</span> <span class="p">=</span> <span class="nx">workerQ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-			<span class="p">}</span>
-			<span class="k">select</span> <span class="p">{</span>
-				<span class="k">case</span> <span class="nx">r</span> <span class="o">:=</span> <span class="o">&lt;-</span> <span class="nx">q</span><span class="p">.</span><span class="nx">requestChan</span><span class="p">:</span>
-					<span class="c1">//取到任务了，加进队列去
-</span><span class="c1"></span>					<span class="nx">requestQ</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">requestQ</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-				<span class="k">case</span> <span class="nx">w</span> <span class="o">:=</span> <span class="o">&lt;-</span> <span class="nx">q</span><span class="p">.</span><span class="nx">workerChan</span><span class="p">:</span>
-					<span class="c1">//取到工人了，加到工人队列去
-</span><span class="c1"></span>					<span class="nx">workerQ</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">workerQ</span><span class="p">,</span><span class="nx">w</span><span class="p">)</span>
-        	<span class="c1">//将任务分发给worker
-</span><span class="c1"></span>				<span class="k">case</span> <span class="nx">activeWorker</span> <span class="o">&lt;-</span> <span class="nx">activeRequest</span><span class="p">:</span>
-					<span class="nx">workerQ</span> <span class="p">=</span> <span class="nx">workerQ</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-					<span class="nx">requestQ</span> <span class="p">=</span> <span class="nx">requestQ</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-<span class="p">}</span>
-<span class="c1">//每次都新建一个chan返回
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">QueueScheduler</span><span class="p">)</span> <span class="nf">WorkerChan</span><span class="p">()</span> <span class="kd">chan</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span>
-<span class="p">}</span>
-
-</code></pre></div><p>下面是主函数：</p>
-<div class="highlight"><pre class="chroma"><code class="language-GO" data-lang="GO"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-  <span class="c1">//获取一个Mysql的存储Chan，engine将结果通过这个channel传输给Mysql
-</span><span class="c1"></span>  <span class="nx">itemChan</span> <span class="o">:=</span> <span class="nx">MysqlServer</span><span class="p">.</span><span class="nf">getChannel</span><span class="p">()</span>
-  <span class="nx">e</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">ConcurrentEngine</span><span class="p">{</span>
-		<span class="c1">//Scheduler:&amp;scheduler.SimpleScheduler{},
-</span><span class="c1"></span>		<span class="nx">Scheduler</span><span class="p">:</span>        <span class="o">&amp;</span><span class="nx">scheduler</span><span class="p">.</span><span class="nx">QueuedScheduler</span><span class="p">{},</span>
-		<span class="nx">WorkerCount</span><span class="p">:</span>      <span class="mi">100</span><span class="p">,</span>
-		<span class="nx">ItemChan</span><span class="p">:</span>         <span class="nx">itemChan</span><span class="p">,</span>
-    <span class="nx">RequestProcessor</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">str</span> <span class="kt">string</span><span class="p">){</span><span class="nx">XXXXX</span><span class="p">},</span> <span class="c1">//func对Request进行处理
-</span><span class="c1"></span>	<span class="p">}</span>
-  <span class="c1">//将初始的数据放进去Engine进行处理
-</span><span class="c1"></span>	<span class="nx">e</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;www.baidu.com&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>]]></content>
-		</item>
-		
-		<item>
-			<title>如何使用Hugo&#43;GithubPage搭建一个简单的博客</title>
-			<link>https://carrymaniac.github.io/posts/how/</link>
-			<pubDate>Mon, 06 Apr 2020 15:52:49 +0800</pubDate>
-			
-			<guid>https://carrymaniac.github.io/posts/how/</guid>
-			<description>起因是因为在搜go相关知识的时候，搜到了一个博客，样式很好看，心想着也要搭建一个人博客，原先是想着自己开发手写一个博客出来，但是思考了一下这样的造轮子没什么意义。因此开始折腾如何使用hugo来搭建一个个人博客。
-第一步 下载安装hugo  这一部分建议参考 www.gohugo.org 这应该是一个Hugo粉丝自己的社区网站，在这里可以了解如何安装hugo mac用户用brew安装就行，会自动配置好env环境变量  第二步 配置Github Page  GithubPage的官方介绍：https://pages.github.com/ 简要的来说 就是创建好一个repository，主要是这个repository的名字需要写好，名字应该为username.github.io，项目的链接为https://github.com/username/username.github.io  第三步 Hugo站点 hugo new site changmen-blog # 新建一个叫changmen-blog的站点 hugo new post/my-first-post.md # 新建一篇叫my-first-post的文章，用markdown格式 //对文章进行编辑 hugo server -D # 启动本地服务器进行预览 # 此时可以使用127.0.0.1:1313进行预览博客样式 如果想对样式进行调整，可在hugo的样式库里面找到自己喜欢的主题，并按照其中的配置修改主目录下的config.toml，我现在用的是一个国人设计的hermit.
-第四部 部署到git 首先使用hugo进行构建，默认将静态站点保存到 &amp;ldquo;public&amp;rdquo; 目录。
-之后进入到public文件夹，git init进行初始化
-git init ## 这里carrymaniac/carrymaniac.github.io记得换成你自己的 git remote add origin git@github.com:carrymaniac/carrymaniac.github.io ## 因为origin的master在创建的时候新建了个Readme，所以需要合并一下 git pull origin master --allow-unrelated-histories git status git add . git commit -m &amp;#34;add new post&amp;#34; git push -u origin master 此时便完成了一个人博客的部署</description>
-			<content type="html"><![CDATA[<p>起因是因为在搜go相关知识的时候，搜到了一个博客，样式很好看，心想着也要搭建一个人博客，原先是想着自己开发手写一个博客出来，但是思考了一下这样的造轮子没什么意义。因此开始折腾如何使用hugo来搭建一个个人博客。</p>
-<h2 id="第一步-下载安装hugo">第一步 下载安装hugo</h2>
-<ul>
-<li>这一部分建议参考 <a href="http://www.gohugo.org">www.gohugo.org</a> 这应该是一个Hugo粉丝自己的社区网站，在这里可以了解如何安装hugo</li>
-<li>mac用户用brew安装就行，会自动配置好env环境变量</li>
-</ul>
-<h2 id="第二步-配置github-page">第二步 配置Github Page</h2>
-<ul>
-<li>GithubPage的官方介绍：https://pages.github.com/</li>
-<li>简要的来说 就是创建好一个repository，主要是这个repository的名字需要写好，名字应该为<code>username.github.io</code>，项目的链接为<code>https://github.com/username/username.github.io</code></li>
-</ul>
-<h2 id="第三步-hugo站点">第三步 Hugo站点</h2>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">hugo new site changmen-blog <span class="c1"># 新建一个叫changmen-blog的站点</span>
-hugo new post/my-first-post.md <span class="c1"># 新建一篇叫my-first-post的文章，用markdown格式</span>
-//对文章进行编辑
-
-hugo server -D <span class="c1"># 启动本地服务器进行预览</span>
-<span class="c1"># 此时可以使用127.0.0.1:1313进行预览博客样式</span>
-</code></pre></div><p>如果想对样式进行调整，可在hugo的样式库里面找到自己喜欢的主题，并按照其中的配置修改主目录下的<code>config.toml</code>，我现在用的是一个国人设计的<code>hermit</code>.</p>
-<h2 id="第四部-部署到git">第四部 部署到git</h2>
-<p>首先使用<code>hugo</code>进行构建，默认将静态站点保存到 &ldquo;public&rdquo; 目录。</p>
-<p>之后进入到public文件夹，git init进行初始化</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">git init 
-<span class="c1">## 这里carrymaniac/carrymaniac.github.io记得换成你自己的</span>
-git remote add origin git@github.com:carrymaniac/carrymaniac.github.io
-<span class="c1">## 因为origin的master在创建的时候新建了个Readme，所以需要合并一下</span>
-git pull origin master --allow-unrelated-histories
-git status 
-git add .
-git commit -m <span class="s2">&#34;add new post&#34;</span>
-git push -u origin master
-</code></pre></div><p>此时便完成了一个人博客的部署</p>
-<p>博客的地址为 <a href="https://username.github.io">https://username.github.io</a></p>
-<h2 id="结语">结语</h2>
-<p>博客搭建大概就是这样，之后我会补充一个如何用Github作为图床，方便博客图片插入的小番外</p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>Golang从入门到放弃</title>
-			<link>https://carrymaniac.github.io/posts/go/</link>
-			<pubDate>Mon, 06 Apr 2020 15:04:51 +0800</pubDate>
-			
-			<guid>https://carrymaniac.github.io/posts/go/</guid>
-			<description>关于Go的工具链 go build 编译go文件 跨平台编译 env GOOS=linux GOARCH=amd64 go build
-go install 也是编译 但是与build最大的不同在于会将文件输出打包在pkg目录下
-go get 获取包 例如：go get -u xxx
-go fmt 统一代码风格和排版
-go test 测试 运行当前包目录下的tests，其中 go test -v 会打印详细信息
-所用到框架：    类型 名称     web框架 gin   日志库 lexkong/log   配置 spf13/viper   JWT dgrijalva/jwt-go   数据库ORM gorm    关于fmt包    值 含义     %v 值的默认格式表示   %+v 类似%v，但输出结构体时会添加字段名   %#v 值的Go语法表示   %T 打印值的类型   %% 百分号   %b 表示为二进制   %c 该值对应的unicode码值   %d 表示为十进制   %e %E 科学计数法，如-1234.</description>
-			<content type="html"><![CDATA[<h2 id="关于go的工具链">关于Go的工具链</h2>
-<p>go build 编译go文件
-跨平台编译 env GOOS=linux GOARCH=amd64 go build</p>
-<p>go install 也是编译
-但是与build最大的不同在于会将文件输出打包在pkg目录下</p>
-<p>go get 获取包
-例如：go get -u xxx</p>
-<p>go fmt 统一代码风格和排版</p>
-<p>go test 测试
-运行当前包目录下的tests，其中 go test -v 会打印详细信息</p>
-<p><img src="https://raw.githubusercontent.com/carrymaniac/pic/master/Golang" alt="GoTest"></p>
-<h2 id="所用到框架">所用到框架：</h2>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>web框架</td>
-<td>gin</td>
-</tr>
-<tr>
-<td>日志库</td>
-<td>lexkong/log</td>
-</tr>
-<tr>
-<td>配置</td>
-<td>spf13/viper</td>
-</tr>
-<tr>
-<td>JWT</td>
-<td>dgrijalva/jwt-go</td>
-</tr>
-<tr>
-<td>数据库ORM</td>
-<td>gorm</td>
-</tr>
-</tbody>
-</table>
-<h2 id="关于fmt包">关于fmt包</h2>
-<table>
-<thead>
-<tr>
-<th>值</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>%v</td>
-<td>值的默认格式表示</td>
-</tr>
-<tr>
-<td>%+v</td>
-<td>类似%v，但输出结构体时会添加字段名</td>
-</tr>
-<tr>
-<td>%#v</td>
-<td>值的Go语法表示</td>
-</tr>
-<tr>
-<td>%T</td>
-<td>打印值的类型</td>
-</tr>
-<tr>
-<td>%%</td>
-<td>百分号</td>
-</tr>
-<tr>
-<td>%b</td>
-<td>表示为二进制</td>
-</tr>
-<tr>
-<td>%c</td>
-<td>该值对应的unicode码值</td>
-</tr>
-<tr>
-<td>%d</td>
-<td>表示为十进制</td>
-</tr>
-<tr>
-<td>%e %E</td>
-<td>科学计数法，如-1234.456e+78</td>
-</tr>
-<tr>
-<td>%f %F</td>
-<td>有小数部分但无指数部分，如123.456</td>
-</tr>
-<tr>
-<td>%s</td>
-<td>直接输出字符串或者[]byte</td>
-</tr>
-<tr>
-<td>%q</td>
-<td>该值对应的双引号括起来的go语法字符串字面值，必要时会采用安全的转义表示</td>
-</tr>
-</tbody>
-</table>
-<h2 id="tip">Tip：</h2>
-<ul>
-<li>记住切片是从a到b-1切的：因此如果需要切到index为n的时候，需要写为[:index+1]，记得加一</li>
-<li>摆脱java的定性思维，切片的遍历采用range即可 不需要去一个个写for i=0开始遍历w</li>
-</ul>
-]]></content>
-		</item>
-		
-	</channel>
-</rss>
+</html>
