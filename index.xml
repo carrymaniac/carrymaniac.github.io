@@ -13,6 +13,22 @@
     
     
     <item>
+      <title>Spring Security</title>
+      <link>https://carrymaniac.github.io/posts/spring-security/</link>
+      <pubDate>Mon, 27 Apr 2020 17:17:30 +0800</pubDate>
+      
+      <guid>https://carrymaniac.github.io/posts/spring-security/</guid>
+      <description>JWT 流程  客户端使用用户名和密码请求登录 服务端收到请求后会去验证用户名和密码，如果用户名和密码跟数据库记录不一致则验证失败，如果一致则验证通过，服务端会签发一个 Token 返回给客户端 客户端收到请求后会将 Token 缓存起来，比如放在浏览器 Cookie 中或者本地存储中，之后每次请求都会携带该 Token 服务端收到请求后会验证请求中携带的 Token，验证通过则进行业务逻辑处理并成功返回数据  jwt,即JSON WEB TOKEN，它是基于 RFC 7519 标准定义的一种可以安全传输的的JSON对象，由于使用了数字签名，所以是可信任和安全的。
+格式 在 JWT 中，Token 有三部分组成，中间用 . 隔开，并使用 Base64 编码：
+ header.payload.signature
+ 其中：
+ header用于存放  Token 的类型 Token 所使用的加密算法    { &amp;#34;typ&amp;#34;: &amp;#34;JWT&amp;#34;, &amp;#34;alg&amp;#34;: &amp;#34;HS256&amp;#34; } 该例说明 Token 类型是 JWT，加密算法是 HS256（alg 算法可以有多种）。
+  payload
+Payload 中携带 Token 的具体内容，里面有一些标准的字段，当然你也可以添加额外的字段，来表达更丰富的信息，可以用这些信息来做更丰富的处理，比如记录请求用户名，标准字段有：
+ iss：JWT Token 的签发者 sub：主题 exp：JWT Token 过期时间 aud：接收 JWT Token 的一方 iat：JWT Token 签发时间 nbf：JWT Token 生效时间 jti：JWT Token ID    { &amp;#34;id&amp;#34;: 2, &amp;#34;username&amp;#34;: &amp;#34;kong&amp;#34;, &amp;#34;nbf&amp;#34;: 1527931805, &amp;#34;iat&amp;#34;: 1527931805 } {&amp;#34;sub&amp;#34;:&amp;#34;admin&amp;#34;, &amp;#34;iat&amp;#34;:1489079981393, &amp;#34;exp&amp;#34;:1489684781}   signature</description>
+    </item>
+    
+    <item>
       <title>小后台学Vue</title>
       <link>https://carrymaniac.github.io/posts/vue-learn/</link>
       <pubDate>Sun, 19 Apr 2020 23:18:17 +0800</pubDate>
