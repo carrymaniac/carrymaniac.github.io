@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>netty on UnhappyBrain</title>
+    <link>https://carrymaniac.github.io/tags/netty/</link>
+    <description>Recent content in netty on UnhappyBrain</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-hans</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 27 Apr 2020 17:27:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://carrymaniac.github.io/tags/netty/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>30分钟搭写一个聊天板</title>
+      <link>https://carrymaniac.github.io/posts/my-chat/</link>
+      <pubDate>Mon, 27 Apr 2020 17:27:37 +0800</pubDate>
+      
+      <guid>https://carrymaniac.github.io/posts/my-chat/</guid>
+      <description>最近放假在家，无事学习了netty，写一个demo练手，快速编写一个简陋的聊天网页。
+思路 基本的结构是后台采用netty，前端采用websocket和后台进行连接。
+登陆：
+ 前端用户发请求到netty服务器，服务器进行校验，返回响应  聊天：
+ 前端用户将消息内容和聊天对象的ID以JSON报文的格式发给后台 后台经过Hadnler链拿到包，对里面的用户数据进行解析，并返回响应给用户前端 同时通过会话存储拿到聊天对象的channel并将消息发送给目标  本文阅读需要有对netty基础的了解，以及一点点前端websocket的知识
+后台部分 创建服务器启动类：
+package com.gdou.im.server; import com.gdou.im.server.handler.WebSocketHandler; import com.gdou.im.server.handler.LoginRequestHandler; import com.gdou.im.server.handler.MessageRequestHandler; import io.netty.bootstrap.ServerBootstrap; import io.netty.channel.ChannelFuture; import io.netty.channel.ChannelInitializer; import io.netty.channel.nio.NioEventLoopGroup; import io.netty.channel.socket.nio.NioServerSocketChannel; import io.netty.channel.socket.nio.NioSocketChannel; import io.netty.handler.codec.http.HttpObjectAggregator; import io.netty.handler.codec.http.HttpServerCodec; import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler; import io.netty.handler.stream.ChunkedWriteHandler; /** * @ProjectName: demo * @Package: com.gdou.im.server * @ClassName: NettyServer * @Author: carrymaniac * @Description: netty的服务器端 * @Date: 2020/1/4 1:08 下午 * @Version: */ public class NettyServer { public static void main(String[] args) throws InterruptedException { //定义线程组  NioEventLoopGroup bossGroup = new NioEventLoopGroup(); NioEventLoopGroup workerGroup = new NioEventLoopGroup(); final ServerBootstrap serverBootstrap = new ServerBootstrap(); serverBootstrap.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,8 +6,526 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-hans</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Mon, 27 Apr 2020 17:17:30 +0800</lastBuildDate>
+		<lastBuildDate>Mon, 27 Apr 2020 17:27:37 +0800</lastBuildDate>
 		<atom:link href="https://carrymaniac.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>30分钟搭写一个聊天板</title>
+			<link>https://carrymaniac.github.io/posts/my-chat/</link>
+			<pubDate>Mon, 27 Apr 2020 17:27:37 +0800</pubDate>
+			
+			<guid>https://carrymaniac.github.io/posts/my-chat/</guid>
+			<description>最近放假在家，无事学习了netty，写一个demo练手，快速编写一个简陋的聊天网页。
+思路 基本的结构是后台采用netty，前端采用websocket和后台进行连接。
+登陆：
+ 前端用户发请求到netty服务器，服务器进行校验，返回响应  聊天：
+ 前端用户将消息内容和聊天对象的ID以JSON报文的格式发给后台 后台经过Hadnler链拿到包，对里面的用户数据进行解析，并返回响应给用户前端 同时通过会话存储拿到聊天对象的channel并将消息发送给目标  本文阅读需要有对netty基础的了解，以及一点点前端websocket的知识
+后台部分 创建服务器启动类：
+package com.gdou.im.server; import com.gdou.im.server.handler.WebSocketHandler; import com.gdou.im.server.handler.LoginRequestHandler; import com.gdou.im.server.handler.MessageRequestHandler; import io.netty.bootstrap.ServerBootstrap; import io.netty.channel.ChannelFuture; import io.netty.channel.ChannelInitializer; import io.netty.channel.nio.NioEventLoopGroup; import io.netty.channel.socket.nio.NioServerSocketChannel; import io.netty.channel.socket.nio.NioSocketChannel; import io.netty.handler.codec.http.HttpObjectAggregator; import io.netty.handler.codec.http.HttpServerCodec; import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler; import io.netty.handler.stream.ChunkedWriteHandler; /** * @ProjectName: demo * @Package: com.gdou.im.server * @ClassName: NettyServer * @Author: carrymaniac * @Description: netty的服务器端 * @Date: 2020/1/4 1:08 下午 * @Version: */ public class NettyServer { public static void main(String[] args) throws InterruptedException { //定义线程组  NioEventLoopGroup bossGroup = new NioEventLoopGroup(); NioEventLoopGroup workerGroup = new NioEventLoopGroup(); final ServerBootstrap serverBootstrap = new ServerBootstrap(); serverBootstrap.</description>
+			<content type="html"><![CDATA[<p>最近放假在家，无事学习了netty，写一个demo练手，快速编写一个简陋的聊天网页。</p>
+<h2 id="思路">思路</h2>
+<p>基本的结构是后台采用netty，前端采用websocket和后台进行连接。</p>
+<p>登陆：</p>
+<ul>
+<li>前端用户发请求到netty服务器，服务器进行校验，返回响应</li>
+</ul>
+<p>聊天：</p>
+<ul>
+<li>前端用户将消息内容和聊天对象的ID以JSON报文的格式发给后台</li>
+<li>后台经过Hadnler链拿到包，对里面的用户数据进行解析，并返回响应给用户前端</li>
+<li>同时通过会话存储拿到聊天对象的channel并将消息发送给目标</li>
+</ul>
+<p>本文阅读需要有对netty基础的了解，以及一点点前端websocket的知识</p>
+<h2 id="后台部分">后台部分</h2>
+<p>创建服务器启动类：</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.gdou.im.server</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.gdou.im.server.handler.WebSocketHandler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.server.handler.LoginRequestHandler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.server.handler.MessageRequestHandler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.bootstrap.ServerBootstrap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelFuture</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelInitializer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.nio.NioEventLoopGroup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.socket.nio.NioServerSocketChannel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.socket.nio.NioSocketChannel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.http.HttpObjectAggregator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.http.HttpServerCodec</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.stream.ChunkedWriteHandler</span><span class="o">;</span>
+
+<span class="cm">/**
+</span><span class="cm"> * @ProjectName: demo
+</span><span class="cm"> * @Package: com.gdou.im.server
+</span><span class="cm"> * @ClassName: NettyServer
+</span><span class="cm"> * @Author: carrymaniac
+</span><span class="cm"> * @Description: netty的服务器端
+</span><span class="cm"> * @Date: 2020/1/4 1:08 下午
+</span><span class="cm"> * @Version:
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NettyServer</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="c1">//定义线程组
+</span><span class="c1"></span>        <span class="n">NioEventLoopGroup</span> <span class="n">bossGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NioEventLoopGroup</span><span class="o">();</span>
+        <span class="n">NioEventLoopGroup</span> <span class="n">workerGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NioEventLoopGroup</span><span class="o">();</span>
+        <span class="kd">final</span> <span class="n">ServerBootstrap</span> <span class="n">serverBootstrap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServerBootstrap</span><span class="o">();</span>
+        <span class="n">serverBootstrap</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">bossGroup</span><span class="o">,</span><span class="n">workerGroup</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="n">NioServerSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">childHandler</span><span class="o">(</span><span class="k">new</span> <span class="n">ChannelInitializer</span><span class="o">&lt;</span><span class="n">NioSocketChannel</span><span class="o">&gt;(){</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">initChannel</span><span class="o">(</span><span class="n">NioSocketChannel</span> <span class="n">ch</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+                        <span class="c1">//Http编解码器，HttpServerCodec()
+</span><span class="c1"></span>                        <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">().</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">HttpServerCodec</span><span class="o">());</span>
+                        <span class="c1">//大数据流处理
+</span><span class="c1"></span>                        <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">().</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">ChunkedWriteHandler</span><span class="o">());</span>
+                        <span class="c1">//HttpObjectAggregator：聚合器，聚合了FullHTTPRequest、FullHTTPResponse。。。，当你不想去管一些HttpMessage的时候，直接把这个handler丢到管道中，让Netty自行处理即可
+</span><span class="c1"></span>                        <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">().</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">HttpObjectAggregator</span><span class="o">(</span><span class="n">2048</span><span class="o">*</span><span class="n">64</span><span class="o">));</span>
+                        <span class="c1">//WebSocketServerProtocolHandler：给客户端指定访问的路由（/ws），是服务器端处理的协议，当前的处理器处理一些繁重的复杂的东西，运行在一个WebSocket服务端
+</span><span class="c1"></span>                        <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">().</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">WebSocketServerProtocolHandler</span><span class="o">(</span><span class="s">&#34;/ws&#34;</span><span class="o">));</span>
+                        <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">().</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">WebSocketHandler</span><span class="o">());</span>
+                        <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">().</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">MessageRequestHandler</span><span class="o">());</span>
+                        <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">().</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="n">LoginRequestHandler</span><span class="o">());</span>
+
+                    <span class="o">}</span>
+                <span class="o">});</span>
+        <span class="n">ChannelFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">serverBootstrap</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">8080</span><span class="o">).</span><span class="na">sync</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>其中，里面的WebSocketHandler、MessageRequestHandler、LoginRequestHandler是自定义的handler，下面分别展示：</p>
+<h3 id="websockethandler">WebSocketHandler</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.gdou.im.server.handler</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.alibaba.fastjson.JSONObject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.PacketCodeC</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.data.Data</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.data.request.LoginRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.data.request.MessageRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.Packet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelHandlerContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.SimpleChannelInboundHandler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.group.ChannelGroup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.group.DefaultChannelGroup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.http.websocketx.TextWebSocketFrame</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.util.concurrent.GlobalEventExecutor</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+
+<span class="cm">/**
+</span><span class="cm"> * @ProjectName: demo
+</span><span class="cm"> * @Package: com.gdou.im.server.handler
+</span><span class="cm"> * @ClassName: ChatHandler
+</span><span class="cm"> * @Author: carrymaniac
+</span><span class="cm"> * @Description: ChatHandler
+</span><span class="cm"> * @Date: 2020/1/28 12:01 上午
+</span><span class="cm"> * @Version:
+</span><span class="cm"> */</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebSocketHandler</span> <span class="kd">extends</span> <span class="n">SimpleChannelInboundHandler</span><span class="o">&lt;</span><span class="n">TextWebSocketFrame</span><span class="o">&gt;{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">channelRead0</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">TextWebSocketFrame</span> <span class="n">msg</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="na">text</span><span class="o">();</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;接收到了websocket包,内容为:{}&#34;</span><span class="o">,</span><span class="n">text</span><span class="o">);</span>
+        <span class="n">Packet</span> <span class="n">packet</span> <span class="o">=</span> <span class="n">JSONObject</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">text</span><span class="o">,</span> <span class="n">Packet</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">packet</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">Data</span> <span class="n">decode</span> <span class="o">=</span> <span class="n">PacketCodeC</span><span class="o">.</span><span class="na">INSTANCE</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">packet</span><span class="o">);</span>
+            <span class="c1">//分发到下一个Handler
+</span><span class="c1"></span>            <span class="k">if</span><span class="o">(</span><span class="n">decode</span> <span class="k">instanceof</span> <span class="n">MessageRequest</span><span class="o">){</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;向下转型完成,内容为:{}&#34;</span><span class="o">,</span><span class="n">decode</span><span class="o">);</span>
+                <span class="n">ctx</span><span class="o">.</span><span class="na">fireChannelRead</span><span class="o">((</span><span class="n">MessageRequest</span><span class="o">)</span><span class="n">decode</span><span class="o">);</span>
+            <span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">decode</span> <span class="k">instanceof</span> <span class="n">LoginRequest</span><span class="o">){</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;向下转型完成,内容为:{}&#34;</span><span class="o">,</span><span class="n">decode</span><span class="o">);</span>
+                <span class="n">ctx</span><span class="o">.</span><span class="na">fireChannelRead</span><span class="o">((</span><span class="n">LoginRequest</span><span class="o">)</span><span class="n">decode</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>WebSocketHandler主要职责是用于接收Handler链WebSocketServerProtocolHandler发下来的TextWebSocketFrame，解析其中的JSON正文为Packet (java对象)，然后转化为对应的每一个Request对象发送到Handler链的下一个Handler进行处理。</p>
+<h3 id="loginrequesthandler">LoginRequestHandler</h3>
+<p>LoginRequestHandler主要用于处理WebSocketHandler发下来的MessageRequest数据，并生成LoginResponse响应将登陆情况发回给用户。</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.gdou.im.server.handler</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.alibaba.fastjson.JSONObject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.Packet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.data.request.LoginRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.data.response.LoginResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.session.Session</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.util.SessionUtil</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelHandlerContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.SimpleChannelInboundHandler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.http.websocketx.TextWebSocketFrame</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.UUID</span><span class="o">;</span>
+
+<span class="kn">import static</span> <span class="nn">com.gdou.im.protocol.command.Command.LOGIN_RESPONSE</span><span class="o">;</span>
+
+<span class="cm">/**
+</span><span class="cm"> * @ProjectName: demo
+</span><span class="cm"> * @Package: com.gdou.im.server.handler
+</span><span class="cm"> * @ClassName: LoginRequestHandler
+</span><span class="cm"> * @Author: carrymaniac
+</span><span class="cm"> * @Description:
+</span><span class="cm"> * @Date: 2020/1/28 1:34 下午
+</span><span class="cm"> * @Version:
+</span><span class="cm"> */</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginRequestHandler</span> <span class="kd">extends</span> <span class="n">SimpleChannelInboundHandler</span><span class="o">&lt;</span><span class="n">LoginRequest</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">channelRead0</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">LoginRequest</span> <span class="n">msg</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">LoginResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LoginResponse</span><span class="o">();</span>
+        <span class="n">Packet</span> <span class="n">packet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Packet</span><span class="o">();</span>
+      <span class="c1">//校验用户名和密码合法，这里没有实现，可以自行加入数据库校验等实现
+</span><span class="c1"></span>        <span class="k">if</span><span class="o">(</span><span class="n">valid</span><span class="o">(</span><span class="n">msg</span><span class="o">)){</span>
+            <span class="c1">//随机生成ID
+</span><span class="c1"></span>            <span class="n">String</span> <span class="n">userId</span> <span class="o">=</span> <span class="n">randomUserId</span><span class="o">();</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setSuccess</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setUserId</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setUserName</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">getUserName</span><span class="o">());</span>
+            <span class="c1">//绑定session和channel，将用户信息和对应的channel进行绑定，以供之后使用
+</span><span class="c1"></span>            <span class="n">SessionUtil</span><span class="o">.</span><span class="na">bindSession</span><span class="o">(</span><span class="k">new</span> <span class="n">Session</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span><span class="n">msg</span><span class="o">.</span><span class="na">getUserName</span><span class="o">()),</span><span class="n">ctx</span><span class="o">.</span><span class="na">channel</span><span class="o">());</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;用户:{}登陆成功&#34;</span><span class="o">,</span><span class="n">msg</span><span class="o">.</span><span class="na">getUserName</span><span class="o">());</span>
+            <span class="c1">//进行广播，对所有在线的成员channel发送一条消息
+</span><span class="c1"></span>            <span class="n">SessionUtil</span><span class="o">.</span><span class="na">broadcast</span><span class="o">(</span><span class="s">&#34;用户: &#34;</span><span class="o">+</span><span class="n">msg</span><span class="o">.</span><span class="na">getUserName</span><span class="o">()+</span><span class="s">&#34;已上线,他的ID为: &#34;</span><span class="o">+</span><span class="n">userId</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setReason</span><span class="o">(</span><span class="s">&#34;账号密码校验失败&#34;</span><span class="o">);</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setSuccess</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;用户:{}登陆失败&#34;</span><span class="o">,</span><span class="n">msg</span><span class="o">.</span><span class="na">getUserName</span><span class="o">());</span>
+        <span class="o">}</span>
+        <span class="n">packet</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">response</span><span class="o">));</span>
+        <span class="n">packet</span><span class="o">.</span><span class="na">setCommand</span><span class="o">(</span><span class="n">LOGIN_RESPONSE</span><span class="o">);</span>
+      <span class="c1">//将登陆成功的消息发给用户
+</span><span class="c1"></span>        <span class="n">ctx</span><span class="o">.</span><span class="na">channel</span><span class="o">().</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="k">new</span> <span class="n">TextWebSocketFrame</span><span class="o">(</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">packet</span><span class="o">)));</span>
+
+    <span class="o">}</span>
+
+
+    <span class="cm">/**
+</span><span class="cm">     * 进行登陆校验，todo 之后可以在这个方法中加入数据库进行校验
+</span><span class="cm">     * @param loginRequest
+</span><span class="cm">     * @return
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">valid</span><span class="o">(</span><span class="n">LoginRequest</span> <span class="n">loginRequest</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+
+ 		<span class="c1">//生成一个用户ID
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">randomUserId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">().</span><span class="na">split</span><span class="o">(</span><span class="s">&#34;-&#34;</span><span class="o">)[</span><span class="n">0</span><span class="o">];</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * channel没有链接到远程节点的时候
+</span><span class="cm">     * @param ctx
+</span><span class="cm">     * @throws Exception
+</span><span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">channelInactive</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+      <span class="c1">//当用户断开连接时，需要将其session和channel移除
+</span><span class="c1"></span>        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">SessionUtil</span><span class="o">.</span><span class="na">getSession</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">channel</span><span class="o">());</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;用户{}下线了，移除其session&#34;</span><span class="o">,</span><span class="n">session</span><span class="o">.</span><span class="na">getUserName</span><span class="o">());</span>
+        <span class="n">SessionUtil</span><span class="o">.</span><span class="na">unBindSession</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">channel</span><span class="o">());</span>
+        <span class="n">SessionUtil</span><span class="o">.</span><span class="na">broadcast</span><span class="o">(</span><span class="s">&#34;用户: &#34;</span><span class="o">+</span><span class="n">session</span><span class="o">.</span><span class="na">getUserName</span><span class="o">()+</span><span class="s">&#34;已下线&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+</code></pre></div><h3 id="messagerequesthandler">MessageRequestHandler</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.gdou.im.server.handler</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.alibaba.fastjson.JSONObject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.Packet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.command.Command</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.data.Data</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.data.request.MessageRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.data.response.MessageResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.session.Session</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.util.SessionUtil</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.Channel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.ChannelHandlerContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.SimpleChannelInboundHandler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.http.websocketx.TextWebSocketFrame</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">lombok.extern.slf4j.Slf4j</span><span class="o">;</span>
+
+<span class="cm">/**
+</span><span class="cm"> * @ProjectName: demo
+</span><span class="cm"> * @Package: com.gdou.im.server.handler
+</span><span class="cm"> * @ClassName: DataHandler
+</span><span class="cm"> * @Author: carrymaniac
+</span><span class="cm"> * @Description:
+</span><span class="cm"> * @Date: 2020/1/28 1:15 下午
+</span><span class="cm"> * @Version:
+</span><span class="cm"> */</span>
+<span class="nd">@Slf4j</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessageRequestHandler</span> <span class="kd">extends</span> <span class="n">SimpleChannelInboundHandler</span><span class="o">&lt;</span><span class="n">MessageRequest</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">channelRead0</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">MessageRequest</span> <span class="n">msg</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;拿到了数据，到达此处了:{}&#34;</span><span class="o">,</span><span class="n">msg</span><span class="o">);</span>
+        <span class="c1">//通过channel获取到用户的信息
+</span><span class="c1"></span>        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">SessionUtil</span><span class="o">.</span><span class="na">getSession</span><span class="o">(</span><span class="n">ctx</span><span class="o">.</span><span class="na">channel</span><span class="o">());</span>
+        <span class="c1">//开始写回去
+</span><span class="c1"></span>        <span class="n">Packet</span> <span class="n">packetForConfirm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Packet</span><span class="o">();</span>
+        <span class="n">packetForConfirm</span><span class="o">.</span><span class="na">setCommand</span><span class="o">(</span><span class="n">Command</span><span class="o">.</span><span class="na">MESSAGE_RESPONSE</span><span class="o">);</span>
+        <span class="n">MessageResponse</span> <span class="n">responseForConfirm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MessageResponse</span><span class="o">();</span>
+        <span class="n">responseForConfirm</span><span class="o">.</span><span class="na">setMessage</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="n">responseForConfirm</span><span class="o">.</span><span class="na">setFromUserName</span><span class="o">(</span><span class="s">&#34;你&#34;</span><span class="o">);</span>
+        <span class="n">packetForConfirm</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">responseForConfirm</span><span class="o">));</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">channel</span><span class="o">().</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="k">new</span> <span class="n">TextWebSocketFrame</span><span class="o">(</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">packetForConfirm</span><span class="o">)));</span>
+
+        <span class="c1">//构建response,将消息发送给用户要发送的id用户
+</span><span class="c1"></span>        <span class="c1">//通过toId获取channel
+</span><span class="c1"></span>        <span class="n">Channel</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">SessionUtil</span><span class="o">.</span><span class="na">getChannel</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">getToId</span><span class="o">());</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">channel</span><span class="o">!=</span><span class="kc">null</span><span class="o">&amp;&amp;</span> <span class="n">SessionUtil</span><span class="o">.</span><span class="na">hasLogin</span><span class="o">(</span><span class="n">channel</span><span class="o">)){</span>
+          <span class="c1">//toID的用户在线，构建包发回给用户
+</span><span class="c1"></span>            <span class="n">MessageResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MessageResponse</span><span class="o">();</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setFromUserId</span><span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">getUserId</span><span class="o">());</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setFromUserName</span><span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">getUserName</span><span class="o">());</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setMessage</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+            <span class="n">Packet</span> <span class="n">packetForToId</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Packet</span><span class="o">();</span>
+            <span class="n">packetForToId</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">response</span><span class="o">));</span>
+            <span class="n">packetForToId</span><span class="o">.</span><span class="na">setCommand</span><span class="o">(</span><span class="n">Command</span><span class="o">.</span><span class="na">MESSAGE_RESPONSE</span><span class="o">);</span>
+            <span class="n">channel</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="k">new</span> <span class="n">TextWebSocketFrame</span><span class="o">(</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">packetForToId</span><span class="o">)));</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;用户并不在线&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>到这，三个最重要的handler就介绍完成，还有一个比较重要的部分就是SessionUtil部分：</p>
+<h3 id="sessionutil">SessionUtil</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//Session.java
+</span><span class="c1"></span><span class="nd">@Data</span>
+<span class="nd">@NoArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Session</span> <span class="o">{</span>
+    <span class="c1">// 用户唯一性标识
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">userId</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">userName</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Session</span><span class="o">(</span><span class="n">String</span> <span class="n">userId</span><span class="o">,</span> <span class="n">String</span> <span class="n">userName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">userId</span> <span class="o">=</span> <span class="n">userId</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">userName</span> <span class="o">=</span> <span class="n">userName</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">userId</span> <span class="o">+</span> <span class="s">&#34;:&#34;</span> <span class="o">+</span> <span class="n">userName</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//SessionUtil.java
+</span><span class="c1"></span><span class="kn">package</span> <span class="nn">com.gdou.im.util</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.alibaba.fastjson.JSONObject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.attribute.Attributes</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.Packet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.protocol.data.response.MessageResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.gdou.im.session.Session</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.channel.Channel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.netty.handler.codec.http.websocketx.TextWebSocketFrame</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Set</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ConcurrentHashMap</span><span class="o">;</span>
+
+<span class="kn">import static</span> <span class="nn">com.gdou.im.protocol.command.Command.SYSTEM_MESSAGE_RESPONSE</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SessionUtil</span> <span class="o">{</span>
+  	<span class="c1">//用于存储用户ID---&gt;channel的对应关系
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Channel</span><span class="o">&gt;</span> <span class="n">userIdChannelMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ConcurrentHashMap</span><span class="o">&lt;&gt;();</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">bindSession</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">,</span> <span class="n">Channel</span> <span class="n">channel</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">//在map中存放绑定关系
+</span><span class="c1"></span>        <span class="n">userIdChannelMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">getUserId</span><span class="o">(),</span> <span class="n">channel</span><span class="o">);</span>
+      <span class="c1">//在channel中存储用户信息
+</span><span class="c1"></span>        <span class="n">channel</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="n">Attributes</span><span class="o">.</span><span class="na">SESSION</span><span class="o">).</span><span class="na">set</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">unBindSession</span><span class="o">(</span><span class="n">Channel</span> <span class="n">channel</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">hasLogin</span><span class="o">(</span><span class="n">channel</span><span class="o">))</span> <span class="o">{</span>
+          <span class="c1">//解除绑定
+</span><span class="c1"></span>            <span class="n">userIdChannelMap</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">getSession</span><span class="o">(</span><span class="n">channel</span><span class="o">).</span><span class="na">getUserId</span><span class="o">());</span>
+            <span class="n">channel</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="n">Attributes</span><span class="o">.</span><span class="na">SESSION</span><span class="o">).</span><span class="na">set</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">hasLogin</span><span class="o">(</span><span class="n">Channel</span> <span class="n">channel</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">return</span> <span class="n">channel</span><span class="o">.</span><span class="na">hasAttr</span><span class="o">(</span><span class="n">Attributes</span><span class="o">.</span><span class="na">SESSION</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Session</span> <span class="nf">getSession</span><span class="o">(</span><span class="n">Channel</span> <span class="n">channel</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">return</span> <span class="n">channel</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="n">Attributes</span><span class="o">.</span><span class="na">SESSION</span><span class="o">).</span><span class="na">get</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Channel</span> <span class="nf">getChannel</span><span class="o">(</span><span class="n">String</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">return</span> <span class="n">userIdChannelMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
+    <span class="o">}</span>
+
+  <span class="c1">//广播
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">broadcast</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">){</span>
+        <span class="n">Packet</span> <span class="n">packet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Packet</span><span class="o">();</span>
+        <span class="n">packet</span><span class="o">.</span><span class="na">setCommand</span><span class="o">(</span><span class="n">SYSTEM_MESSAGE_RESPONSE</span><span class="o">);</span>
+        <span class="n">MessageResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MessageResponse</span><span class="o">();</span>
+        <span class="n">response</span><span class="o">.</span><span class="na">setMessage</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="n">response</span><span class="o">.</span><span class="na">setFromUserName</span><span class="o">(</span><span class="s">&#34;系统提醒&#34;</span><span class="o">);</span>
+        <span class="n">packet</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">response</span><span class="o">));</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Channel</span><span class="o">&gt;&gt;</span> <span class="n">entries</span> <span class="o">=</span> <span class="n">userIdChannelMap</span><span class="o">.</span><span class="na">entrySet</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Channel</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span><span class="n">entries</span><span class="o">){</span>
+            <span class="n">Channel</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+            <span class="n">channel</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="k">new</span> <span class="n">TextWebSocketFrame</span><span class="o">(</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">packet</span><span class="o">)));</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div><p>其余的后台代码比较简单，请参考我的github仓库的代码。</p>
+<h2 id="前端部分">前端部分</h2>
+<p>前端部分因为本人没学过前端，因此写的比较稀烂，仅供参考：</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+	<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+		<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;utf-8&#34;</span> <span class="p">/&gt;</span>
+		<span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>小聊天室DEMO<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+	<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+	<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+		用户名:<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;userName&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;userName&#34;</span><span class="p">/&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+		用户密码:<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;password&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;userPassword&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;userPassword&#34;</span><span class="p">/&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+		<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;CHAT.login()&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;loginButton&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;loginButton&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;登陆&#34;</span><span class="p">/&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+		<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;&#34;</span><span class="p">&gt;</span>发送消息：<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+		发送ID:<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;toId&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;toId&#34;</span><span class="p">/&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+		发送内容:<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;messageContent&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;messageContent&#34;</span><span class="p">/&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span>  <span class="na">type</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;CHAT.chat()&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;sendButton&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;sendButton&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;发送消息&#34;</span> <span class="p">/&gt;</span>
+		<span class="p">&lt;</span><span class="nt">hr</span><span class="p">&gt;</span>
+		<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;&#34;</span><span class="p">&gt;</span>接收消息列表：<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+		<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;receiveNsg&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;background-color: gainsboro;&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+		
+		
+		<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/javascript&#34;</span><span class="p">&gt;</span>
+			<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+				<span class="nx">name</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+				<span class="nx">id</span><span class="o">:</span><span class="kc">null</span>
+			<span class="p">}</span>
+			<span class="kd">var</span> <span class="nx">COMMAND_CODE</span> <span class="o">=</span> <span class="p">{</span>
+					<span class="c1">//登陆请求
+</span><span class="c1"></span>					<span class="nx">LOGIN_REQUEST</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+					<span class="c1">// 登陆消息响应
+</span><span class="c1"></span>					<span class="nx">LOGIN_RESPONSE</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span>
+					<span class="c1">// 普通消息请求
+</span><span class="c1"></span>					<span class="nx">MESSAGE_REQUEST</span><span class="o">:</span><span class="mi">3</span><span class="p">,</span>
+					<span class="c1">// 普通消息响应
+</span><span class="c1"></span>					<span class="nx">MESSAGE_RESPONSE</span><span class="o">:</span><span class="mi">4</span><span class="p">,</span>
+					<span class="c1">// 系统消息响应
+</span><span class="c1"></span>					<span class="nx">SYSTEM_RESPONSE</span><span class="o">:-</span><span class="mi">1</span>
+				<span class="p">},</span>
+			<span class="nx">_this</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+			<span class="nb">window</span><span class="p">.</span><span class="nx">CHAT</span> <span class="o">=</span> <span class="p">{</span>
+				<span class="nx">socket</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+				<span class="c1">//初始化
+</span><span class="c1"></span>				<span class="nx">init</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+					<span class="c1">//首先判断浏览器是否支持WebSocket
+</span><span class="c1"></span>					<span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">WebSocket</span><span class="p">){</span>
+						<span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+						<span class="nx">CHAT</span><span class="p">.</span><span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="s2">&#34;ws://localhost:8080/ws&#34;</span><span class="p">);</span>
+						<span class="nx">CHAT</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+							<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;客户端与服务端建立连接成功&#34;</span><span class="p">);</span>
+						<span class="p">},</span>
+						<span class="nx">CHAT</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+							<span class="kd">var</span> <span class="nx">receiveNsg</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;receiveNsg&#34;</span><span class="p">);</span>
+							<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">receiveNsg</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">;</span>
+							<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;接收到消息：&#34;</span><span class="o">+</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+							<span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+							<span class="c1">// 说明是登陆的返回消息
+</span><span class="c1"></span>							<span class="k">if</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">command</span><span class="o">==</span><span class="nx">_this</span><span class="p">.</span><span class="nx">COMMAND_CODE</span><span class="p">.</span><span class="nx">LOGIN_RESPONSE</span><span class="p">){</span>
+								<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+								<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+								<span class="k">if</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">success</span><span class="o">==</span><span class="kc">true</span><span class="p">){</span>
+									<span class="nx">_this</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">userName</span><span class="p">;</span>
+									<span class="nx">_this</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">userId</span><span class="p">;</span>
+									<span class="nx">receiveNsg</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">html</span> <span class="o">+</span> <span class="s2">&#34;&lt;br&gt;&#34;</span> <span class="o">+</span> 
+									<span class="s2">&#34;用户登陆成功，您的ID为：&#34;</span><span class="o">+</span><span class="nx">result</span><span class="p">.</span><span class="nx">userId</span><span class="o">+</span><span class="s2">&#34;,快去告诉你的朋友吧&#34;</span><span class="p">;</span>
+									<span class="k">return</span><span class="p">;</span>
+								<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+									<span class="nx">receiveNsg</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">html</span> <span class="o">+</span> <span class="s2">&#34;&lt;br&gt;&#34;</span> <span class="o">+</span> 
+									<span class="s2">&#34;用户登陆失败，原因是：&#34;</span><span class="o">+</span><span class="nx">result</span><span class="p">.</span><span class="nx">reason</span><span class="p">;</span>
+								<span class="p">}</span>
+							<span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">command</span><span class="o">==</span><span class="nx">_this</span><span class="p">.</span><span class="nx">COMMAND_CODE</span><span class="p">.</span><span class="nx">MESSAGE_RESPONSE</span><span class="p">){</span>
+								<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+								<span class="nx">receiveNsg</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">html</span> <span class="o">+</span> <span class="s2">&#34;&lt;br&gt;&#34;</span> <span class="o">+</span> 
+									<span class="s2">&#34;[&#34;</span><span class="o">+</span><span class="nx">result</span><span class="p">.</span><span class="nx">fromUserName</span><span class="o">+</span><span class="s2">&#34;]&#34;</span><span class="o">+</span><span class="s2">&#34;说：&#34;</span><span class="o">+</span><span class="nx">result</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+								<span class="c1">// 将ID设置到发送id框上去
+</span><span class="c1"></span>								<span class="kd">var</span> <span class="nx">toId</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;toId&#34;</span><span class="p">);</span>
+								<span class="k">if</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">fromUserId</span><span class="o">!=</span><span class="nx">_this</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">){</span>
+									<span class="nx">toId</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">fromUserId</span><span class="p">;</span>
+								<span class="p">}</span>
+								<span class="k">return</span><span class="p">;</span>
+							<span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">command</span><span class="o">==</span><span class="nx">_this</span><span class="p">.</span><span class="nx">COMMAND_CODE</span><span class="p">.</span><span class="nx">SYSTEM_RESPONSE</span><span class="p">){</span>
+								<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+								<span class="nx">receiveNsg</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">html</span> <span class="o">+</span> <span class="s2">&#34;&lt;br&gt;&#34;</span> <span class="o">+</span> 
+									<span class="s2">&#34;[系统提示] &#34;</span><span class="o">+</span><span class="nx">result</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+								<span class="c1">// 将ID设置到发送id框上去
+</span><span class="c1"></span>								<span class="kd">var</span> <span class="nx">toId</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;toId&#34;</span><span class="p">);</span>
+								<span class="nx">toId</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">fromUserId</span><span class="p">;</span>
+								<span class="k">return</span><span class="p">;</span>
+							<span class="p">}</span>
+						<span class="p">},</span>
+						<span class="nx">CHAT</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+							<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;发生错误&#34;</span><span class="p">);</span>
+						<span class="p">},</span>
+						<span class="nx">CHAT</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">onclose</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+							<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;客户端与服务端关闭连接成功&#34;</span><span class="p">);</span>
+						<span class="p">}</span>		
+					<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+						<span class="nx">alert</span><span class="p">(</span><span class="s2">&#34;8102年都过了，升级下浏览器吧&#34;</span><span class="p">);</span>
+					<span class="p">}</span>
+				<span class="p">},</span>
+				<span class="nx">chat</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+					<span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;messageContent&#34;</span><span class="p">);</span>
+					<span class="kd">var</span> <span class="nx">toId</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;toId&#34;</span><span class="p">);</span>
+					<span class="kd">var</span> <span class="nx">packet</span> <span class="o">=</span> <span class="p">{</span>
+						<span class="nx">version</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+						<span class="nx">command</span><span class="o">:</span><span class="nx">_this</span><span class="p">.</span><span class="nx">COMMAND_CODE</span><span class="p">.</span><span class="nx">MESSAGE_REQUEST</span><span class="p">,</span>
+						<span class="nx">data</span><span class="o">:</span><span class="p">{</span>
+							<span class="nx">fromid</span><span class="o">:</span><span class="nx">_this</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+							<span class="nx">toid</span><span class="o">:</span><span class="nx">toId</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+							<span class="nx">message</span><span class="o">:</span><span class="nx">msg</span><span class="p">.</span><span class="nx">value</span>
+						<span class="p">}</span>
+					<span class="p">}</span>
+					<span class="nx">CHAT</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">packet</span><span class="p">));</span>
+				<span class="p">},</span>
+				<span class="nx">login</span><span class="o">:</span><span class="kd">function</span><span class="p">(){</span>
+					<span class="kd">var</span> <span class="nx">userName</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;userName&#34;</span><span class="p">);</span>
+					<span class="kd">var</span> <span class="nx">userPassword</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;userPassword&#34;</span><span class="p">);</span>
+					<span class="kd">var</span> <span class="nx">packet</span> <span class="o">=</span> <span class="p">{</span>
+						<span class="nx">version</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+						<span class="nx">command</span><span class="o">:</span><span class="nx">_this</span><span class="p">.</span><span class="nx">COMMAND_CODE</span><span class="p">.</span><span class="nx">LOGIN_REQUEST</span><span class="p">,</span>
+						<span class="nx">data</span><span class="o">:</span><span class="p">{</span>
+							<span class="nx">userName</span><span class="o">:</span><span class="nx">userName</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+							<span class="nx">password</span><span class="o">:</span><span class="nx">userPassword</span><span class="p">.</span><span class="nx">value</span>
+						<span class="p">}</span>
+					<span class="p">}</span>
+					<span class="nx">CHAT</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">packet</span><span class="p">));</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+			<span class="nx">CHAT</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+		<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+		
+	<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div><p>大致效果如下图：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200129101717314.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hnaDM4NjMzOTk=,size_16,color_FFFFFF,t_70" alt="用户1登陆"></p>
+<p>打开第二个标签页，再次登陆：
+<img src="https://img-blog.csdnimg.cn/20200129101739535.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hnaDM4NjMzOTk=,size_16,color_FFFFFF,t_70" alt="用户2小红登陆"></p>
+<p>此时会发现，第一个标签页会出现提示：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200129101804191.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hnaDM4NjMzOTk=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+在第一个标签页输入小红ID，以及内容，在第二个标签页显示如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200129101819230.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hnaDM4NjMzOTk=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>小红用户接收到消息,并在发送ID框上填充上小明的ID。此时可以进行回复，小明用户效果图如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200129101823419.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hnaDM4NjMzOTk=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>到此演示完毕，这个demo主要是为了自己记忆练习netty的主要用法。问题很多，大佬轻喷。</p>
+<p><a href="https://github.com/carrymaniac/im-demo">github地址</a></p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Spring Security</title>

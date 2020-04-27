@@ -3,8 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://carrymaniac.github.io/posts/my-chat/</loc>
+    <lastmod>2020-04-27T17:27:37+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://carrymaniac.github.io/tags/netty/</loc>
+    <lastmod>2020-04-27T17:27:37+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://carrymaniac.github.io/posts/</loc>
-    <lastmod>2020-04-27T17:17:30+08:00</lastmod>
+    <lastmod>2020-04-27T17:27:37+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://carrymaniac.github.io/tags/</loc>
+    <lastmod>2020-04-27T17:27:37+08:00</lastmod>
   </url>
   
   <url>
@@ -14,11 +29,6 @@
   
   <url>
     <loc>https://carrymaniac.github.io/posts/spring-security/</loc>
-    <lastmod>2020-04-27T17:17:30+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://carrymaniac.github.io/tags/</loc>
     <lastmod>2020-04-27T17:17:30+08:00</lastmod>
   </url>
   
