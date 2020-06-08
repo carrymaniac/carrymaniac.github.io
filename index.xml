@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Git</title>
+      <link>https://carrymaniac.github.io/posts/git/</link>
+      <pubDate>Mon, 08 Jun 2020 19:51:08 +0800</pubDate>
+      
+      <guid>https://carrymaniac.github.io/posts/git/</guid>
+      <description>记录一下自己常用的Git命令：
+基础操作 # 添加一个远程仓库 git remote add [url] git remote add origin &amp;lt;branch-name&amp;gt; git remote add origin git@github.com:nanfei9330/learngit.git # 拉取远程信息 git fetch # 列出已有的远程仓库 git remote # 将远程master的数据拉取下来 git pull origin master # git日志 git log git log --pretty=format:&amp;#34;%h %an %ar - %s&amp;#34; git log --grep=&amp;#34;#1234&amp;#34; # git查看不同 git diff git diff --staged git show # 查看状态 git status # 拉取操作 git pull origin master --allow-unrelated-histories 分支操作 # 从master创建新分支 git branch new_branch master # 切换到新分支 git checkout new_branch # 查看分支信息 git branch -va # 删除分支 git branch -d new_branch # 合并分支 git merge new_branch 回退撤销操作 # commit完之后后悔了。想跳到上一次的commit git reset master^ # 回退到上上次 git reset master^ # 回退到前5 git reset master~5 # 几个模式 # --mixed 这个模式下会把暂存区的文件丢弃，但是不会动工作区的内容 # --hard 不管是工作区还是暂存区的文件都会被丢弃 git checkout git reset git revert git revert --hard git revert --no-edit git revert HEAD.</description>
+    </item>
+    
+    <item>
       <title>30分钟搭写一个聊天板</title>
       <link>https://carrymaniac.github.io/posts/my-chat/</link>
       <pubDate>Mon, 27 Apr 2020 17:27:37 +0800</pubDate>
